@@ -7765,12 +7765,12 @@ header .autocomplete-container > ul.autocomplete-list > li {
 }
 @media (min-width: 1000px) {
   .rebrand-hero-image {
-    background-image: url("#");
+    background-image: url("./home-search.jpg");
   }
 }
 .rebrand-hero-overlay {
   background-color: #070441;
-  background-image: url("#");
+  background-image: url("./dark-pattern.svg");
   border-radius: 20px 20px 20px 20px;
   height: 100%;
   position: absolute;
@@ -8846,7 +8846,7 @@ section.ha--fixedPrice_rebrand_container.content-wrapper p {
   }
 }
 .image-primary-backdrop:after {
-  background-image: url("#");
+  background-image: url("./ele.jpg");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -9199,7 +9199,7 @@ section[class*="ha--"] {
   padding: 0;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 250px;
+  min-height: 150px;
 }
 section[class^="ha--"] .l-content-width,
 section[class*="ha--"] .l-content-width {

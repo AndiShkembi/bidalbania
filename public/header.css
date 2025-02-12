@@ -1108,6 +1108,19 @@ header.dark-theme input {
   height: 27px;
   width: 321px;
 }
+
+@media only screen and (max-device-width: 640px) {
+  .ha--logo {
+    display: none;
+  }
+}
+
+@media only screen and (max-device-width: 768px) {
+  .ha--logo {
+    display: none;
+  }
+}
+
 header.dark-theme .ha--logo #HomeAdvisor_logo path {
   fill: #fff;
 }
