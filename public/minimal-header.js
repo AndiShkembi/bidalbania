@@ -18,7 +18,7 @@ if (!Element.prototype.closest) {
 }
 function goToStorefront() {
   window.location.href =
-    "https://www.homeadvisor.com/storefront/" + window.location.search;
+    "#" + window.location.search;
 }
 (function (d, w) {
   var state = {
