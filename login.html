@@ -286,6 +286,11 @@ function forgotPassword() {
         alert('Nëse ky email ekziston në sistemin tonë, do të merrni një email me udhëzime për rivendosjen e fjalëkalimit.');
     }
 }
+
+if (localStorage.getItem('token')) {
+    window.location.href = 'profile.html';
+}
 </script>
+<script src="./public/header.js"></script>
 </body>
 </html> 

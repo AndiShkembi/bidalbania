@@ -497,6 +497,11 @@ document.getElementById('phone').addEventListener('blur', function() {
         this.setCustomValidity('');
     }
 });
+
+if (localStorage.getItem('token')) {
+    window.location.href = 'profile.html';
+}
 </script>
+<script src="./public/header.js"></script>
 </body>
 </html> 
