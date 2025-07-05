@@ -1,0 +1,54 @@
+/* SharpSans Font Family */
+@font-face {
+  font-family: 'SharpSans';
+  src: url('./fonts/SharpSans-bold/SharpSans-Bold.woff2') format('woff2'),
+       url('./fonts/SharpSans-bold/SharpSans-Bold.woff') format('woff'),
+       url('./fonts/SharpSans-bold/SharpSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SharpSans';
+  src: url('./fonts/SharpSans-medium/SharpSans-Medium.woff2') format('woff2'),
+       url('./fonts/SharpSans-medium/SharpSans-Medium.woff') format('woff'),
+       url('./fonts/SharpSans-medium/SharpSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SharpSans';
+  src: url('./fonts/SharpSans-semibold/SharpSans-Semibold.woff2') format('woff2'),
+       url('./fonts/SharpSans-semibold/SharpSans-Semibold.woff') format('woff'),
+       url('./fonts/SharpSans-semibold/SharpSans-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SharpSans';
+  src: url('./fonts/SharpSans-bold/SharpSans-MediumItalic.woff2') format('woff2'),
+       url('./fonts/SharpSans-bold/SharpSans-MediumItalic.woff') format('woff'),
+       url('./fonts/SharpSans-bold/SharpSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* UI Icons */
+@font-face {
+  font-family: 'ha-ui-icons';
+  src: url('./ha-ui-icons-41f9fc2afa28f739379d9ac30be49f3b.woff') format('woff'),
+       url('./ha-ui-icons-41f9fc2afa28f739379d9ac30be49f3b.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Consumer Icons */
+@font-face {
+  font-family: 'ha-consumer-icons';
+  src: url('./ha-consumer-icons-1d68045a5d58cf3a652e4a5cc89019cf.woff') format('woff'),
+       url('./ha-consumer-icons-1d68045a5d58cf3a652e4a5cc89019cf.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+} 
