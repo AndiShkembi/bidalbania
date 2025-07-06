@@ -6,7 +6,7 @@ import logo from '../../../logo.png';
 import './Header.css';
 
 const Header = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,7 +30,6 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="header-logo-link">
           <div className="header-logo-bubble">
-            <img src={logo} alt="BidAlbania Logo" className="header-logo-img" />
             <span className="header-logo-text">BidAlbania</span>
           </div>
         </Link>
@@ -43,8 +42,27 @@ const Header = () => {
 
         {/* User Actions */}
         <div className="header-actions">
-          <Link to="/login" className="header-action-link">Identifikohu</Link>
-          <Link to="/signup" className="header-action-link header-action-signup">Regjistrohu</Link>
+          {!loading && (
+            <>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/profile" className="header-action-link">
+                    <User className="header-action-icon" />
+                    Profili
+                  </Link>
+                  <button onClick={handleLogout} className="header-action-link header-action-logout">
+                    <LogOut className="header-action-icon" />
+                    Dil
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="header-action-link">Identifikohu</Link>
+                  <Link to="/signup" className="header-action-link header-action-signup">Regjistrohu</Link>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </header>

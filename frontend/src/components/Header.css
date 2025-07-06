@@ -38,17 +38,7 @@
   min-height: 40px;
 }
 
-.header-logo-bubble::after {
-  content: '';
-  position: absolute;
-  right: 18px;
-  bottom: -10px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid #0a0e3f;
-  border-top: 10px solid transparent;
-  border-bottom: 0 solid transparent;
-}
+
 
 .header-logo-img {
   width: 28px;
@@ -103,11 +93,20 @@
   border-radius: 8px;
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
 }
 
 .header-action-link:hover {
   background: #f5f6fa;
   color: #0a0e3f;
+}
+
+.header-action-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .header-action-signup {
@@ -122,6 +121,17 @@
 .header-action-signup:hover {
   background: #23265c;
   color: #fff;
+}
+
+.header-action-logout {
+  color: #dc2626;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.header-action-logout:hover {
+  background: #fef2f2;
+  color: #dc2626;
 }
 
 @media (max-width: 900px) {

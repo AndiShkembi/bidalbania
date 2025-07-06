@@ -1,5 +1,22 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight } from 'lucide-react';
 import homeSearchImage from '../assets/home-search.jpg';
+import img1 from '../assets/1.webp';
+import img2 from '../assets/2.webp';
+import img3 from '../assets/3.webp';
+import img4 from '../assets/4.webp';
+import img5 from '../assets/5.webp';
+import img7 from '../assets/7.webp';
+import img8 from '../assets/8.webp';
+import img9 from '../assets/9.webp';
+import img13 from '../assets/13.webp';
+import img14 from '../assets/14.webp';
+import img20 from '../assets/20.webp';
+import img25 from '../assets/25.webp';
+import img26 from '../assets/26.webp';
+import img29 from '../assets/29.webp';
+import './Home.css';
 
 const categoryTabs = [
   'Shërbimet e përditshme',
@@ -10,264 +27,334 @@ const categoryTabs = [
 ];
 
 const categories = [
-  { name: 'Shërbime të vogla elektrike', image: '/3.webp', tab: 0 },
-  { name: 'Demtime', image: '/2.webp', tab: 0 },
-  { name: 'Sherbim Pastrimi', image: '/1.webp', tab: 0 },
-  { name: 'Mjeshter', image: '/4.webp', tab: 0 },
-  { name: 'Instalimi i pajisjes së vogël', image: '/5.webp', tab: 0 },
-  { name: 'Arkitekt Peizazhi', image: '/7.webp', tab: 1 },
-  { name: 'Punime Druri', image: '/8.webp', tab: 1 },
-  { name: 'Gardhe', image: '/9.webp', tab: 1 },
-  { name: 'Kujdesi për oborrin', image: '/10.webp', tab: 1 },
-  { name: 'Perkujdesje ndaj pemeve', image: '/11.webp', tab: 1 },
-  { name: 'Pishina', image: '/12.webp', tab: 1 },
-  { name: 'Ndërrimi dhe riparimi i çatisë', image: '/13.webp', tab: 2 },
-  { name: 'Ndërrimi i dritares', image: '/14.webp', tab: 2 },
-  { name: 'Mur rrethues', image: '/15.webp', tab: 2 },
-  { name: 'Ulluqe', image: '/16.webp', tab: 2 },
-  { name: 'Dyer', image: '/17.webp', tab: 2 },
-  { name: 'Panele Diellore', image: '/18.webp', tab: 2 },
-  { name: 'Lyerje', image: '/19.webp', tab: 3 },
-  { name: 'Ngrohje dhe ftohje', image: '/20.webp', tab: 3 },
-  { name: 'Hidraulik', image: '/21.webp', tab: 3 },
-  { name: 'Elektricistë', image: '/22.webp', tab: 3 },
-  { name: 'Dyshemeja dhe drurë', image: '/23.webp', tab: 3 },
-  { name: 'Dollapë dhe banakë', image: '/24.webp', tab: 3 },
-  { name: 'Rinovimi i kuzhinës', image: '/25.webp', tab: 4 },
-  { name: 'Rinovimi i banjës', image: '/26.webp', tab: 4 },
-  { name: 'Heqja e mbeturinave', image: '/27.webp', tab: 4 },
-  { name: 'Oborret dhe hyrjet', image: '/28.webp', tab: 4 },
-  { name: 'Inspektimi i shtëpisë', image: '/29.webp', tab: 4 },
-  { name: 'Testimi për mykun', image: '/30.webp', tab: 4 },
+  { 
+    name: 'Elektricist', 
+    image: img3, 
+    tab: 0,
+    description: 'Shërbime profesionale elektrike për shtëpinë dhe biznesin',
+    rating: 4.8,
+    professionals: 45
+  },
+  { 
+    name: 'Hidraulik', 
+    image: img2, 
+    tab: 0,
+    description: 'Riparime dhe instalime hidraulike të cilësisë së lartë',
+    rating: 4.7,
+    professionals: 38
+  },
+  { 
+    name: 'Pastrim', 
+    image: img1, 
+    tab: 0,
+    description: 'Shërbime pastrimi profesionale për shtëpi dhe zyra',
+    rating: 4.9,
+    professionals: 52
+  },
+  { 
+    name: 'Pikturë & Lyerje', 
+    image: img4, 
+    tab: 0,
+    description: 'Pikturë dhe lyerje profesionale për çdo sipërfaqe',
+    rating: 4.6,
+    professionals: 29
+  },
+  { 
+    name: 'Mobilieri', 
+    image: img5, 
+    tab: 0,
+    description: 'Instalim dhe riparim mobilieri për çdo nevojë',
+    rating: 4.5,
+    professionals: 23
+  },
+  { 
+    name: 'Kopshtari', 
+    image: img7, 
+    tab: 1,
+    description: 'Kujdesje profesionale për oborrin dhe pemët',
+    rating: 4.8,
+    professionals: 31
+  },
+  { 
+    name: 'Punime Druri', 
+    image: img8, 
+    tab: 1,
+    description: 'Punime druri të cilësisë së lartë për shtëpinë',
+    rating: 4.7,
+    professionals: 19
+  },
+  { 
+    name: 'Gardhe', 
+    image: img9, 
+    tab: 1,
+    description: 'Instalim dhe riparim gardhe profesionale',
+    rating: 4.6,
+    professionals: 27
+  },
+  { 
+    name: 'Çati & Ulluqe', 
+    image: img13, 
+    tab: 2,
+    description: 'Riparime çati dhe ulluqesh të specializuara',
+    rating: 4.8,
+    professionals: 15
+  },
+  { 
+    name: 'Dyer & Dritare', 
+    image: img14, 
+    tab: 2,
+    description: 'Instalim dhe riparim dyer dhe dritaresh',
+    rating: 4.7,
+    professionals: 22
+  },
+  { 
+    name: 'Ngrohje & Ftohje', 
+    image: img20, 
+    tab: 3,
+    description: 'Sisteme ngrohje dhe ftohje profesionale',
+    rating: 4.9,
+    professionals: 18
+  },
+  { 
+    name: 'Rinovim Kuzhine', 
+    image: img25, 
+    tab: 4,
+    description: 'Rinovim i plotë kuzhine me dizajn modern',
+    rating: 4.8,
+    professionals: 25
+  },
+  { 
+    name: 'Rinovim Banjo', 
+    image: img26, 
+    tab: 4,
+    description: 'Rinovim banjo me materiale të cilësisë së lartë',
+    rating: 4.7,
+    professionals: 21
+  },
+  { 
+    name: 'Transport', 
+    image: img5, 
+    tab: 4,
+    description: 'Shërbime transporti për çdo lloj ngarkese',
+    rating: 4.6,
+    professionals: 33
+  },
+  { 
+    name: 'Inspektim Shtëpie', 
+    image: img29, 
+    tab: 4,
+    description: 'Inspektim profesional i shtëpisë para blerjes',
+    rating: 4.9,
+    professionals: 12
+  },
 ];
 
-const mostSearched = [
-  { name: 'Paisje', icon: '💡' },
-  { name: 'Arkitekt & Inxhinier', icon: '📐' },
-  { name: 'Dollapë dhe banakë', icon: '🗄️' },
-  { name: 'Zdrukthtar', icon: '🪚' },
-  { name: 'Tapeta', icon: '🪟' },
-  { name: 'Beton, Gur & Tulla', icon: '🧱' },
-  { name: 'Transport', icon: '🚚' },
-  { name: 'Izolim', icon: '🧤' },
-  { name: 'Gardhe', icon: '🪵' },
-  { name: 'Parkete Druri', icon: '🪵' },
-  { name: 'Garazhe, Dyer Hapsire', icon: '🚪' },
-  { name: 'Mjeshtër riparimesh', icon: '🛠️' },
+const popularServices = [
+  { name: 'Elektricist', icon: '💡', count: '150+ profesionistë' },
+  { name: 'Hidraulik', icon: '🚿', count: '120+ profesionistë' },
+  { name: 'Pastrim', icon: '🧹', count: '200+ profesionistë' },
+  { name: 'Pikturë', icon: '🎨', count: '85+ profesionistë' },
+  { name: 'Mobilieri', icon: '🪑', count: '65+ profesionistë' },
+  { name: 'Kopshtari', icon: '🌳', count: '95+ profesionistë' },
+  { name: 'Çati', icon: '🏠', count: '45+ profesionistë' },
+  { name: 'Transport', icon: '🚚', count: '110+ profesionistë' },
 ];
 
-const fixedPrice = {
-  image: '/19.webp',
-  title: 'Shërbime me çmim fiks',
-  features: [
-    'Shihni çmimin tuaj',
-    'Rezervo në orar',
-    'Paguaj online',
-  ],
-  cta: 'Shërbimet tona',
-  desc: 'Po kërkoni të rezervoni një shërbim me çmim fiks?',
-};
-
-const springPrep = [
-  { name: 'Shërbime Pastrimi', icon: '🧹' },
-  { name: 'Kujdesje për Oborrin', icon: '🌳' },
-  { name: 'Shërbimi i Pemëve', icon: '🌲' },
-  { name: 'Shtesa dhe Rinovime', icon: '🏡' },
-  { name: 'Veranda', icon: '🏖️' },
-  { name: 'Gardhe', icon: '🪵' },
-];
-
-const projects = [
-  { name: 'Hidraulikë', icon: '🚿' },
-  { name: 'Rinovim Kuzhine', icon: '🍳' },
-  { name: 'Rinovim Tualeti', icon: '🚽' },
-  { name: 'Dyer & Dritare', icon: '🚪' },
-  { name: 'Çati & Ulluqe', icon: '🏠' },
-  { name: 'Elektricistë & Kompjuterë', icon: '💡' },
-];
-
-const navLinks = [
-  { name: 'Fillo një Projekt', href: '#' },
-  { name: 'Bashkohuni me rrjetin tonë', href: '#' },
-  { name: 'Identifikohu', href: '#' },
-  { name: 'Regjistrohu', href: '#' },
+const stats = [
+  { number: '2,500+', label: 'Profesionistë të verifikuar' },
+  { number: '15,000+', label: 'Projekte të përfunduara' },
+  { number: '4.8', label: 'Vlerësim mesatar' },
+  { number: '98%', label: 'Klientë të kënaqur' },
 ];
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // TODO: Implement search functionality
+      console.log('Searching for:', searchQuery);
+    }
+  };
+
+  const filteredCategories = categories.filter(cat => cat.tab === activeTab);
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen flex flex-col">
-      {/* HEADER */}
-      <header className="w-full bg-white shadow-sm sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href="#" className="text-2xl font-bold text-[#18194a] tracking-tight">BidAlbania</a>
-          <nav className="hidden md:flex gap-8">
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="text-[#18194a] hover:text-[#ff5532] font-medium transition-colors">
-                {link.name}
-              </a>
-            ))}
-          </nav>
-          <button className="md:hidden p-2 rounded focus:outline-none">
-            <svg className="w-7 h-7 text-[#18194a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          </button>
-        </div>
-      </header>
-
-      {/* HERO CARD */}
-      <section className="w-full flex justify-center py-10 px-2">
-        <div className="max-w-5xl w-full bg-gradient-to-br from-[#18194a] to-[#23244d] rounded-3xl shadow-lg flex flex-col md:flex-row overflow-hidden">
-          <div className="flex-1 flex flex-col justify-center p-8 gap-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-2">
-              Gjeni profesionistët e duhur për çdo projekt.
+    <div className="home-container">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              Gjeni profesionistët e duhur për çdo projekt
             </h1>
-            <form className="flex w-full max-w-md bg-white rounded-full shadow-md px-4 py-2 items-center">
-              <svg className="w-6 h-6 text-[#9ca3af]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" /></svg>
+            <p className="hero-subtitle">
+              Lidhuni me profesionistë të verifikuar dhe të besueshëm për të gjitha nevojat e shtëpisë dhe biznesit tuaj
+            </p>
+            <form onSubmit={handleSearch} className="hero-search">
+              <Search className="w-6 h-6 text-gray-400" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Çfarë shërbimi ju nevojitet?"
-                className="flex-1 px-4 py-3 text-[#111827] placeholder-[#6b7280] bg-transparent focus:outline-none"
+                className="hero-search-input"
               />
-              <button type="submit" className="ml-2 bg-[#ff5532] hover:bg-[#e64c2e] text-white px-6 py-2 rounded-full transition-colors font-semibold">
-                Kerko
+              <button type="submit" className="hero-search-btn">
+                Kërko
               </button>
             </form>
           </div>
-          <div className="flex-1 flex items-center justify-center bg-white">
-            <img src={homeSearchImage} alt="Hero" className="object-cover w-full h-80 md:h-full" />
+          <div className="hero-image">
+            <img src={homeSearchImage} alt="Profesionistë në punë" />
           </div>
         </div>
       </section>
 
-      {/* CATEGORY TABS */}
-      <section className="w-full max-w-6xl mx-auto px-4 mt-12">
-        <div className="flex flex-wrap gap-3 mb-6">
-          {categoryTabs.map((tab, idx) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(idx)}
-              className={`px-5 py-2 rounded-full font-semibold transition-colors text-sm ${activeTab === idx ? 'bg-[#1dc186] text-white' : 'bg-[#f3f4f6] text-[#18194a] hover:bg-[#e5e7eb]'}`}
-            >
-              {tab}
-            </button>
-          ))}
-          <a href="#" className="ml-auto text-[#18194a] hover:text-[#ff5532] font-medium text-sm">Shiko te gjitha</a>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          {categories.filter(cat => cat.tab === activeTab).map((cat, idx) => (
-            <div key={idx} className="group relative rounded-xl overflow-hidden shadow hover:shadow-lg transition-all bg-white cursor-pointer">
-              <img src={cat.image} alt={cat.name} className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-20 transition-all duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                <span className="text-white text-sm font-medium drop-shadow">{cat.name}</span>
+      {/* Stats Section */}
+      <section className="stats-section">
+        <div className="stats-container">
+          <div className="stats-grid">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-card">
+                <div className="stat-number">{stat.number}</div>
+                <div className="stat-label">{stat.label}</div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* MOST SEARCHED */}
-      <section className="w-full max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#18194a] mb-8">Më të kërkuarat</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {mostSearched.map((item, idx) => (
-            <div key={idx} className="flex flex-col items-center justify-center gap-3 p-6 bg-white rounded-xl shadow hover:bg-[#f3f4f6] transition-colors">
-              <span className="text-3xl md:text-4xl lg:text-5xl">{item.icon}</span>
-              <span className="text-[#18194a] text-base md:text-lg font-medium text-center">{item.name}</span>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-end mt-4">
-          <a href="#" className="bg-[#2563eb] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#1d4ed8] transition-colors">Shfletoni të gjitha shërbimet</a>
-        </div>
-      </section>
-
-      {/* FIXED PRICE SERVICE */}
-      <section className="w-full max-w-6xl mx-auto px-4 py-16 flex flex-col md:flex-row items-center gap-10 bg-[#f4f6fa] rounded-3xl mb-12">
-        <div className="flex-1 flex justify-center">
-          <img src={fixedPrice.image} alt="Shërbim fiks" className="rounded-2xl shadow-lg w-64 h-64 object-cover" />
-        </div>
-        <div className="flex-1 flex flex-col gap-4 items-start">
-          <h3 className="text-lg font-semibold text-[#18194a]">{fixedPrice.title}</h3>
-          <ul className="flex gap-4 flex-wrap mb-2">
-            {fixedPrice.features.map((f, i) => (
-              <li key={i} className="flex items-center gap-2 text-[#18194a] text-sm"><span className="text-[#2563eb]">✔</span> {f}</li>
             ))}
-          </ul>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#18194a] mb-2">{fixedPrice.desc}</h2>
-          <a href="#" className="bg-[#2563eb] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1d4ed8] transition-colors">{fixedPrice.cta}</a>
+          </div>
         </div>
       </section>
 
-      {/* PROJECTS SECTION */}
-      <section className="w-full max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-xl md:text-2xl font-bold text-[#18194a] mb-6">Projektet më të kërkuara</h2>
-        <div className="flex flex-wrap gap-6 justify-center">
-          {projects.map((p, i) => (
-            <div key={i} className="flex flex-col items-center gap-2 bg-white rounded-full shadow p-4 w-28 h-28 justify-center">
-              <span className="text-3xl">{p.icon}</span>
-              <span className="text-xs text-[#18194a] text-center font-medium">{p.name}</span>
-            </div>
-          ))}
+      {/* Categories Section */}
+      <section className="categories-section">
+        <div className="categories-container">
+          <div className="section-header">
+            <h2 className="section-title">Shërbimet tona</h2>
+            <p className="section-subtitle">
+              Zgjidhni nga një gamë e gjerë shërbimesh profesionale të ofruara nga ekspertë të verifikuar
+            </p>
+          </div>
+
+          <div className="category-tabs">
+            {categoryTabs.map((tab, index) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(index)}
+                className={`category-tab ${activeTab === index ? 'active' : ''}`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="categories-grid">
+            {filteredCategories.map((category, index) => (
+              <div key={index} className="category-card">
+                <img 
+                  src={category.image} 
+                  alt={category.name} 
+                  className="category-image"
+                />
+                <div className="category-content">
+                  <h3 className="category-name">{category.name}</h3>
+                  <p className="category-description">{category.description}</p>
+                  <div className="category-meta">
+                    <div className="category-rating">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span>{category.rating}</span>
+                    </div>
+                    <span>{category.professionals} profesionistë</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+            <Link to="/request" className="cta-btn-primary">
+              Shiko të gjitha shërbimet
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* SPRING PREP SECTION */}
-      <section className="w-full max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-xl md:text-2xl font-bold text-[#18194a] mb-6">Përgatituni që tani për pranverën</h2>
-        <div className="flex flex-wrap gap-6 justify-center">
-          {springPrep.map((p, i) => (
-            <div key={i} className="flex flex-col items-center gap-2 bg-white rounded-full shadow p-4 w-28 h-28 justify-center">
-              <span className="text-3xl">{p.icon}</span>
-              <span className="text-xs text-[#18194a] text-center font-medium">{p.name}</span>
-            </div>
-          ))}
+      {/* Popular Services */}
+      <section className="popular-services">
+        <div className="popular-container">
+          <div className="section-header">
+            <h2 className="section-title">Shërbimet më të kërkuara</h2>
+            <p className="section-subtitle">
+              Këto janë shërbimet më popullore që klientët tanë kërkojnë më shpesh
+            </p>
+          </div>
+
+          <div className="services-grid">
+            {popularServices.map((service, index) => (
+              <div key={index} className="service-card">
+                <span className="service-icon">{service.icon}</span>
+                <h3 className="service-name">{service.name}</h3>
+                <p className="service-count">{service.count}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="w-full bg-white text-[#18194a] mt-auto border-t border-[#e5e7eb]">
-        <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-lg font-bold mb-2">BidAlbania</h3>
-            <p className="text-sm opacity-80 mb-4">Platforma më e besueshme për të gjetur dhe rezervuar shërbime lokale të shtëpisë në Shqipëri.</p>
-            <div className="flex gap-3">
-              <a href="#" className="hover:text-[#2563eb]">Facebook</a>
-              <a href="#" className="hover:text-[#2563eb]">Instagram</a>
-              <a href="#" className="hover:text-[#2563eb]">LinkedIn</a>
+      {/* Features Section */}
+      <section className="categories-section">
+        <div className="categories-container">
+          <div className="section-header">
+            <h2 className="section-title">Pse të zgjidhni BidAlbania?</h2>
+            <p className="section-subtitle">
+              Platforma jonë ofron siguri, cilësi dhe besueshmëri për çdo projekt
+            </p>
+          </div>
+
+          <div className="stats-grid">
+            <div className="stat-card">
+              <Shield className="w-12 h-12 text-blue-600 mb-4 mx-auto" />
+              <h3 className="stat-label" style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Profesionistë të Verifikuar</h3>
+              <p className="category-description">Të gjithë profesionistët tanë janë verifikuar dhe të sigurt</p>
+            </div>
+            <div className="stat-card">
+              <Award className="w-12 h-12 text-green-600 mb-4 mx-auto" />
+              <h3 className="stat-label" style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Cilësi e Garantuar</h3>
+              <p className="category-description">Punë me cilësi të lartë dhe garanci për çdo shërbim</p>
+            </div>
+            <div className="stat-card">
+              <Clock className="w-12 h-12 text-orange-600 mb-4 mx-auto" />
+              <h3 className="stat-label" style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Shpejtësi</h3>
+              <p className="category-description">Përgjigje e shpejtë dhe përfundim i projekteve në kohë</p>
+            </div>
+            <div className="stat-card">
+              <MapPin className="w-12 h-12 text-red-600 mb-4 mx-auto" />
+              <h3 className="stat-label" style={{ fontSize: '1.2rem', marginBottom: '8px' }}>Gjithë Shqipëria</h3>
+              <p className="category-description">Shërbime në të gjitha qytetet e Shqipërisë</p>
             </div>
           </div>
-          <div>
-            <h4 className="font-semibold mb-2">Lidhje të Shpejta</h4>
-            <ul className="space-y-1 text-sm">
-              <li><a href="#" className="hover:text-[#2563eb]">Home</a></li>
-              <li><a href="#categories" className="hover:text-[#2563eb]">Shërbime</a></li>
-              <li><a href="#" className="hover:text-[#2563eb]">Më të kërkuarat</a></li>
-              <li><a href="#" className="hover:text-[#2563eb]">Kontakt</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Shërbimet</h4>
-            <ul className="space-y-1 text-sm">
-              <li>Elektricistë</li>
-              <li>Hidraulikë</li>
-              <li>Piktorë</li>
-              <li>Ndërtues</li>
-              <li>Pastrimi</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Kontakt</h4>
-            <ul className="space-y-1 text-sm">
-              <li>Email: info@bidalbania.al</li>
-              <li>Tel: +355 69 123 4567</li>
-              <li>Tiranë, Shqipëri</li>
-            </ul>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="cta-container">
+          <h2 className="cta-title">Gati për të filluar projektin tuaj?</h2>
+          <p className="cta-description">
+            Lidhuni me profesionistët më të mirë dhe merrni ofertat më të mira për projektin tuaj
+          </p>
+          <div className="cta-buttons">
+            <Link to="/request" className="cta-btn-primary">
+              Fillo një projekt
+            </Link>
+            <Link to="/signup" className="cta-btn-secondary">
+              Regjistrohu si profesionist
+            </Link>
           </div>
         </div>
-        <div className="text-center text-xs text-gray-400 py-4 border-t border-[#e5e7eb]">© 2024 BidAlbania. Të gjitha të drejtat e rezervuara.</div>
-      </footer>
+      </section>
     </div>
   );
 };

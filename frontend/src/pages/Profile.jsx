@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { User, Mail, Phone, MapPin, Edit, Save, X, LogOut, AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import './Profile.css';
 
 const API_URL = 'http://localhost:7700/api';
 
 const Profile = () => {
+  const { user, logout: authLogout } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [profile, setProfile] = useState(null);
   const [profileError, setProfileError] = useState('');
@@ -38,7 +40,7 @@ const Profile = () => {
       setProfileError('');
       const token = getToken();
       if (!token) {
-        window.location.href = '/login';
+        authLogout();
         return;
       }
       try {
@@ -49,7 +51,9 @@ const Profile = () => {
         if (!res.ok) {
           setProfileError(data.message || 'Nuk mund të ngarkohet profili.');
           setProfile(null);
-          if (res.status === 401 || res.status === 403) setTimeout(() => logout(), 1500);
+          if (res.status === 401 || res.status === 403) {
+            setTimeout(() => authLogout(), 1500);
+          }
         } else {
           setProfile(data);
           setFormData({
@@ -65,7 +69,7 @@ const Profile = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [authLogout]);
 
   // Load user requests
   const loadUserRequests = async () => {
@@ -95,8 +99,7 @@ const Profile = () => {
 
   // Logout
   const logout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    authLogout();
   };
 
   // Profile edit logic
