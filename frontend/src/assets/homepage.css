@@ -676,7 +676,7 @@ select {
   background: -webkit-linear-gradient(top, #ffffff 0%, #e7e6db 100%);
   background: -o-linear-gradient(top, #ffffff 0%, #e7e6db 100%);
   background: -ms-linear-gradient(top, #ffffff 0%, #e7e6db 100%);
-  background: linear-gradient(top, #ffffff 0%, #e7e6db 100%);
+  background: linear-gradient(to left, #ffffff 0%, #e7e6db 100%);
 }
 .t-input-text {
   -moz-box-shadow: inset 0px 0px 0.1em 0.1em #e7e5da;
@@ -989,7 +989,7 @@ option {
   background: -webkit-linear-gradient(top, #fcfbf8 0%, #f4f3ea 100%);
   background: -o-linear-gradient(top, #fcfbf8 0%, #f4f3ea 100%);
   background: -ms-linear-gradient(top, #fcfbf8 0%, #f4f3ea 100%);
-  background: linear-gradient(top, #fcfbf8 0%, #f4f3ea 100%);
+  background: linear-gradient(to left, #fcfbf8 0%, #f4f3ea 100%);
 }
 .t-stars-one-line .t-stars-rating {
   line-height: 1.15em;
@@ -1306,7 +1306,7 @@ a.t-button-standard:hover {
   background: -webkit-linear-gradient(top, #ffffff 0, #e7e6db 100%);
   background: -o-linear-gradient(top, #ffffff 0, #e7e6db 100%);
   background: -ms-linear-gradient(top, #ffffff 0, #e7e6db 100%);
-  background: linear-gradient(top, #ffffff 0, #e7e6db 100%);
+  background: linear-gradient(to left, #ffffff 0, #e7e6db 100%);
 }
 .t-button-utility:hover {
   color: #273f4d;
@@ -1330,7 +1330,7 @@ a.t-button-secondary-cta:visited {
   background: -webkit-linear-gradient(top, #9dacb6 0, #7c909d 100%);
   background: -o-linear-gradient(top, #9dacb6 0, #7c909d 100%);
   background: -ms-linear-gradient(top, #9dacb6 0, #7c909d 100%);
-  background: linear-gradient(top, #9dacb6 0, #7c909d 100%);
+  background: linear-gradient(to left, #9dacb6 0, #7c909d 100%);
 }
 .t-button-secondary-cta:hover {
   text-shadow: none;
@@ -1348,7 +1348,7 @@ a.t-button-secondary-cta:visited {
   background: -webkit-linear-gradient(top, #adbcc6 0, #8ca0ad 100%);
   background: -o-linear-gradient(top, #adbcc6 0, #8ca0ad 100%);
   background: -ms-linear-gradient(top, #adbcc6 0, #8ca0ad 100%);
-  background: linear-gradient(top, #adbcc6 0, #8ca0ad 100%);
+  background: linear-gradient(to left, #adbcc6 0, #8ca0ad 100%);
 }
 .t-button-utility:disabled,
 .t-button-utility:disabled:hover {
