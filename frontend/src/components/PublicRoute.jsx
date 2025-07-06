@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const ProtectedRoute = ({ children }) => {
+const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading, isInitialized } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isInitialized && !loading && !isAuthenticated) {
-      navigate('/login');
+    if (isInitialized && !loading && isAuthenticated) {
+      navigate('/profile');
     }
   }, [isAuthenticated, loading, isInitialized, navigate]);
 
@@ -46,13 +46,13 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // Nëse nuk është i loguar, nuk shfaq asgjë (do të ridrejtohet)
-  if (!isAuthenticated) {
+  // Nëse është i loguar, nuk shfaq asgjë (do të ridrejtohet)
+  if (isAuthenticated) {
     return null;
   }
 
-  // Nëse është i loguar, shfaq komponentin
+  // Nëse nuk është i loguar, shfaq komponentin
   return children;
 };
 
-export default ProtectedRoute;
+export default PublicRoute; 

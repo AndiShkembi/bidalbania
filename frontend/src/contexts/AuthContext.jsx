@@ -14,44 +14,67 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Kontrollo nëse useri është i loguar në fillim
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      authService.getProfile()
-        .then(userData => {
+    const initializeAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const userData = await authService.getProfile();
           setUser(userData);
-        })
-        .catch(() => {
+        } catch (error) {
+          console.error('Token invalid, removing from storage:', error);
           localStorage.removeItem('token');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
       setLoading(false);
-    }
+      setIsInitialized(true);
+    };
+
+    initializeAuth();
   }, []);
+
+  // Kontrollo nëse useri është i loguar
+  const isAuthenticated = () => {
+    const token = localStorage.getItem('token');
+    return !!token && !!user;
+  };
+
+  // Kontrollo nëse useri NUK është i loguar
+  const isNotAuthenticated = () => {
+    return !isAuthenticated();
+  };
 
   const login = async (email, password) => {
     try {
+      setLoading(true);
       const response = await authService.login(email, password);
       setUser(response.user);
       localStorage.setItem('token', response.token);
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
     }
   };
 
   const signup = async (userData) => {
     try {
+      setLoading(true);
       const response = await authService.signup(userData);
       setUser(response.user);
       localStorage.setItem('token', response.token);
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,13 +83,33 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
+  // Kontrollo dhe rifresko token nëse është i nevojshëm
+  const checkAuth = async () => {
+    const token = localStorage.getItem('token');
+    if (token && !user) {
+      try {
+        const userData = await authService.getProfile();
+        setUser(userData);
+        return true;
+      } catch (error) {
+        localStorage.removeItem('token');
+        setUser(null);
+        return false;
+      }
+    }
+    return !!user;
+  };
+
   const value = {
     user,
     loading,
+    isInitialized,
     login,
     signup,
     logout,
-    isAuthenticated: !!user,
+    isAuthenticated: isAuthenticated(),
+    isNotAuthenticated: isNotAuthenticated(),
+    checkAuth,
   };
 
   return (

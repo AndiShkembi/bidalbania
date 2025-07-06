@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import RequestForm from './pages/RequestForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,9 +29,26 @@ function App() {
             <Header />
             <main className="flex-1">
               <Routes>
+                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route 
+                  path="/login" 
+                  element={
+                    <PublicRoute>
+                      <Login />
+                    </PublicRoute>
+                  } 
+                />
+                <Route 
+                  path="/signup" 
+                  element={
+                    <PublicRoute>
+                      <Signup />
+                    </PublicRoute>
+                  } 
+                />
+                
+                {/* Protected Routes */}
                 <Route 
                   path="/profile" 
                   element={
@@ -47,6 +65,9 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
+                
+                {/* Catch all route - redirect to home */}
+                <Route path="*" element={<Home />} />
               </Routes>
             </main>
             <Footer />
