@@ -1,41 +1,27 @@
 {
   "name": "bidalbania",
   "version": "1.0.0",
-  "description": "Platforma për të lidhur klientët me profesionistët e riparimit dhe përmirësimit të shtëpive në Shqipëri",
+  "description": "Platforma më e besueshme për të gjetur dhe rezervuar shërbime lokale të riparimit dhe përmirësimit të shtëpive në Shqipëri",
   "main": "index.js",
   "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm start",
     "dev:frontend": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "start": "cd backend && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AndiShkembi/bidalbania.git"
-  },
   "keywords": [
-    "bidalbania",
+    "albania",
     "home-services",
     "repair",
-    "albania",
-    "react",
-    "nodejs",
-    "express"
+    "renovation",
+    "professionals"
   ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AndiShkembi/bidalbania/issues"
-  },
-  "homepage": "https://github.com/AndiShkembi/bidalbania#readme",
+  "author": "BidAlbania Team",
+  "license": "MIT",
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.11",
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^8.2.2",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11"
+    "concurrently": "^8.2.2"
   }
 }

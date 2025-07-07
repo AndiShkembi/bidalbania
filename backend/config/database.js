@@ -54,10 +54,21 @@ const requestTable = `CREATE TABLE IF NOT EXISTS requests (
   category TEXT NOT NULL,
   city TEXT NOT NULL,
   address TEXT,
+  postalCode TEXT,
   desiredDate TEXT,
   budget TEXT,
+  budgetType TEXT DEFAULT 'fixed',
+  urgency TEXT DEFAULT 'normal',
+  propertyType TEXT,
+  propertySize TEXT,
+  contactPreference TEXT DEFAULT 'phone',
+  additionalRequirements TEXT,
+  photos TEXT,
   status TEXT DEFAULT 'pending',
+  views INTEGER DEFAULT 0,
+  responses INTEGER DEFAULT 0,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (userId) REFERENCES users(id)
 )`;
 

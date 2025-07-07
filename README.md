@@ -21,7 +21,8 @@ Platforma më e besueshme për të gjetur dhe rezervuar shërbime lokale të rip
 - **CORS** - Cross-origin resource sharing
 
 ### Frontend
-- **React 18** - UI framework
+- **React 19** - UI framework
+- **TypeScript** - Type safety
 - **Vite** - Build tool
 - **Tailwind CSS** - Styling
 - **React Router** - Navigation
