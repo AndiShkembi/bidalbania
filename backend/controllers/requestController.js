@@ -28,4 +28,24 @@ exports.getUserRequests = (req, res) => {
     if (err) return res.status(500).json({ message: 'Gabim në marrjen e kërkesave.' });
     res.json(requests);
   });
+};
+
+// NEW: Search requests by title or description
+exports.searchRequests = (req, res) => {
+  const { query } = req.query;
+  if (!query) return res.json([]);
+  Request.search(query, (err, results) => {
+    if (err) return res.status(500).json({ message: 'Gabim në kërkim.' });
+    res.json(results);
+  });
+};
+
+// NEW: Get requests by category
+exports.getByCategory = (req, res) => {
+  const { category } = req.params;
+  if (!category) return res.status(400).json({ message: 'Kategoria mungon.' });
+  Request.findByCategory(category, (err, results) => {
+    if (err) return res.status(500).json({ message: 'Gabim në filtrimin e kërkesave.' });
+    res.json(results);
+  });
 }; 

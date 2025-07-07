@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import RequestForm from './pages/RequestForm';
+import CategoryRequests from './pages/CategoryRequests';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
@@ -31,6 +32,7 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
+                <Route path="/category/:category" element={<CategoryRequests />} />
                 <Route 
                   path="/login" 
                   element={

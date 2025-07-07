@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight } from 'lucide-react';
+import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight, X } from 'lucide-react';
 import homeSearchImage from '../assets/home-search.jpg';
 import img1 from '../assets/1.webp';
 import img2 from '../assets/2.webp';
@@ -170,14 +170,73 @@ const stats = [
 const Home = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const API_URL = 'http://localhost:7700/api';
+
+  // Search suggestions
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (searchQuery.trim().length < 2) {
+        setSearchResults([]);
+        setShowSuggestions(false);
+        return;
+      }
+
+      setIsSearching(true);
+      try {
+        const res = await fetch(`${API_URL}/requests/search?query=${encodeURIComponent(searchQuery)}`);
+        const data = await res.json();
+        if (res.ok) {
+          setSearchResults(data.slice(0, 5)); // Limit to 5 suggestions
+          setShowSuggestions(true);
+        }
+      } catch (err) {
+        console.error('Search error:', err);
+      }
+      setIsSearching(false);
+    };
+
+    const timeoutId = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // TODO: Implement search functionality
+      // Navigate to search results or category page
       console.log('Searching for:', searchQuery);
+      setShowSuggestions(false);
     }
   };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion.title);
+    setShowSuggestions(false);
+    // Navigate to the specific request or category
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowSuggestions(false);
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.hero-search')) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const filteredCategories = categories.filter(cat => cat.tab === activeTab);
 
@@ -194,17 +253,55 @@ const Home = () => {
               Lidhuni me profesionistë të verifikuar dhe të besueshëm për të gjitha nevojat e shtëpisë dhe biznesit tuaj
             </p>
             <form onSubmit={handleSearch} className="hero-search">
-              <Search className="w-6 h-6 text-gray-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Çfarë shërbimi ju nevojitet?"
-                className="hero-search-input"
-              />
+              <div className="search-input-container">
+                <Search className="w-6 h-6 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setShowSuggestions(true)}
+                  placeholder="Çfarë shërbimi ju nevojitet?"
+                  className="hero-search-input"
+                />
+                {searchQuery && (
+                  <button 
+                    type="button" 
+                    onClick={clearSearch}
+                    className="clear-search-btn"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
               <button type="submit" className="hero-search-btn">
                 Kërko
               </button>
+              
+              {/* Search Suggestions */}
+              {showSuggestions && (searchResults.length > 0 || isSearching) && (
+                <div className="search-suggestions">
+                  {isSearching ? (
+                    <div className="suggestion-item loading">
+                      <div className="loading-spinner"></div>
+                      <span>Duke kërkuar...</span>
+                    </div>
+                  ) : (
+                    searchResults.map((result, index) => (
+                      <div 
+                        key={index} 
+                        className="suggestion-item"
+                        onClick={() => handleSuggestionClick(result)}
+                      >
+                        <div className="suggestion-content">
+                          <h4>{result.title}</h4>
+                          <p>{result.category} • {result.city}</p>
+                        </div>
+                        <span className="suggestion-budget">{result.budget}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
             </form>
           </div>
           <div className="hero-image">
@@ -251,7 +348,11 @@ const Home = () => {
 
           <div className="categories-grid">
             {filteredCategories.map((category, index) => (
-              <div key={index} className="category-card">
+              <Link 
+                key={index} 
+                to={`/category/${encodeURIComponent(category.name)}`}
+                className="category-card"
+              >
                 <img 
                   src={category.image} 
                   alt={category.name} 
@@ -268,7 +369,7 @@ const Home = () => {
                     <span>{category.professionals} profesionistë</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
