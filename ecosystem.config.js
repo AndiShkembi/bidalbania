@@ -23,8 +23,8 @@ module.exports = {
     },
     {
       name: 'bidalbania-frontend',
-      script: 'npm',
-      args: 'run preview',
+      script: 'npx',
+      args: 'vite preview --host 0.0.0.0 --port 3000',
       cwd: './frontend',
       instances: 1,
       autorestart: true,
