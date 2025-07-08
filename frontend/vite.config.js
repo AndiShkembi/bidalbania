@@ -10,6 +10,7 @@ export default defineConfig({
   },
   preview: {
     port: 8080,
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    allowedHosts: ['bidalbania.al', 'localhost', '127.0.0.1']
   }
 })
