@@ -12,6 +12,8 @@ import CategoryRequests from './pages/CategoryRequests';
 import Requests from './pages/Requests';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+import StartProject from './pages/StartProject';
+import JoinNetwork from './pages/JoinNetwork';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +35,10 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/requests" element={<Requests />} />
+                <Route path="/request" element={<Requests />} />
                 <Route path="/category/:category" element={<CategoryRequests />} />
+                <Route path="/start-project" element={<StartProject />} />
+                <Route path="/join-network" element={<JoinNetwork />} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />

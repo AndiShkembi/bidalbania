@@ -36,8 +36,8 @@ const Header = () => {
 
         {/* Navigation */}
         <nav className="header-nav">
-          <Link to="/" className="header-nav-link">Filloni një Projekt</Link>
-          <Link to="#" className="header-nav-link">Bashkohuni me rrjetin tonë</Link>
+          <Link to="/start-project" className="header-nav-link">Filloni një Projekt</Link>
+          <Link to="/join-network" className="header-nav-link">Bashkohuni me rrjetin tonë</Link>
         </nav>
 
         {/* User Actions */}

@@ -54,11 +54,22 @@ exports.getByCategory = (req, res) => {
   });
 };
 
-// NEW: Get all requests (public)
+// NEW: Get all requests (public) me pagination, filtra dhe total
 exports.getAllRequests = (req, res) => {
-  Request.getAll((err, results) => {
+  const { page = 1, pageSize = 20, search = '', category = '', city = '', sort = 'newest' } = req.query;
+  const pageNum = parseInt(page, 10) || 1;
+  const sizeNum = parseInt(pageSize, 10) || 20;
+
+  require('../models/Request').getAllPaginated({
+    page: pageNum,
+    pageSize: sizeNum,
+    search,
+    category,
+    city,
+    sort
+  }, (err, result) => {
     if (err) return res.status(500).json({ message: 'Gabim në marrjen e kërkesave.' });
-    res.json(results);
+    res.json(result);
   });
 };
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight, X } from 'lucide-react';
+import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight, X, CheckCircle, UserPlus } from 'lucide-react';
 import homeSearchImage from '../assets/home-search.jpg';
 import img1 from '../assets/1.webp';
 import img2 from '../assets/2.webp';
@@ -17,6 +17,7 @@ import img25 from '../assets/25.webp';
 import img26 from '../assets/26.webp';
 import img29 from '../assets/29.webp';
 import './Home.css';
+import './ModernCta.css';
 
 const categoryTabs = [
   'Shërbimet e përditshme',
@@ -27,6 +28,7 @@ const categoryTabs = [
 ];
 
 const categories = [
+  // Tab 0: Shërbimet e përditshme
   { 
     name: 'Elektricist', 
     image: img3, 
@@ -52,21 +54,14 @@ const categories = [
     professionals: 52
   },
   { 
-    name: 'Pikturë', 
-    image: img4, 
-    tab: 0,
-    description: 'Pikturë dhe lyerje profesionale për çdo sipërfaqe',
-    rating: 4.6,
-    professionals: 29
-  },
-  { 
-    name: 'Mobilieri', 
+    name: 'Transport', 
     image: img5, 
     tab: 0,
-    description: 'Instalim dhe riparim mobilieri për çdo nevojë',
-    rating: 4.5,
-    professionals: 23
+    description: 'Shërbime transporti për çdo lloj ngarkese',
+    rating: 4.6,
+    professionals: 33
   },
+  // Tab 1: Ambjentet e jashtme
   { 
     name: 'Kopshtari', 
     image: img7, 
@@ -75,14 +70,128 @@ const categories = [
     rating: 4.8,
     professionals: 31
   },
-  // Çati nuk është në seed, por po e lëmë për UI
   { 
-    name: 'Transport', 
+    name: 'Dysheme & Parket', 
+    image: img29, 
+    tab: 1,
+    description: 'Vendosje dhe mirëmbajtje parketi dhe dyshemeje',
+    rating: 4.7,
+    professionals: 27
+  },
+  { 
+    name: 'Kondicionerë', 
+    image: img20, 
+    tab: 1,
+    description: 'Instalim dhe mirëmbajtje kondicionerësh',
+    rating: 4.8,
+    professionals: 22
+  },
+  { 
+    name: 'Mobilieri', 
     image: img5, 
-    tab: 4,
-    description: 'Shërbime transporti për çdo lloj ngarkese',
+    tab: 1,
+    description: 'Instalim dhe riparim mobilieri për çdo nevojë',
+    rating: 4.5,
+    professionals: 23
+  },
+  // Tab 2: Punë të jashtme
+  { 
+    name: 'Pikturë', 
+    image: img4, 
+    tab: 2,
+    description: 'Pikturë dhe lyerje profesionale për çdo sipërfaqe',
     rating: 4.6,
-    professionals: 33
+    professionals: 29
+  },
+  { 
+    name: 'IT & Teknologji', 
+    image: img25, 
+    tab: 2,
+    description: 'Shërbime IT, instalime rrjetesh dhe teknologji',
+    rating: 4.7,
+    professionals: 19
+  },
+  { 
+    name: 'Çati', 
+    image: img26, 
+    tab: 2,
+    description: 'Riparim dhe ndërtim çatie për shtëpi dhe biznese',
+    rating: 4.5,
+    professionals: 15
+  },
+  { 
+    name: 'Dyer & Dritare', 
+    image: img8, 
+    tab: 2,
+    description: 'Montim dhe riparim dyersh dhe dritaresh',
+    rating: 4.6,
+    professionals: 18
+  },
+  // Tab 3: Punë të brëndshme
+  { 
+    name: 'Gips & Suvatime', 
+    image: img13, 
+    tab: 3,
+    description: 'Punime gipsi, suvatime dhe dekorime të brendshme',
+    rating: 4.7,
+    professionals: 20
+  },
+  { 
+    name: 'Shtrime pllaka', 
+    image: img14, 
+    tab: 3,
+    description: 'Shtrime pllaka për banjo, kuzhina dhe ambiente të tjera',
+    rating: 4.8,
+    professionals: 21
+  },
+  { 
+    name: 'Izolim', 
+    image: img9, 
+    tab: 3,
+    description: 'Izolim termik dhe akustik për ambiente të brendshme',
+    rating: 4.6,
+    professionals: 17
+  },
+  { 
+    name: 'Dekorim', 
+    image: img8, 
+    tab: 3,
+    description: 'Dekorime të brendshme dhe dizajn modern',
+    rating: 4.7,
+    professionals: 16
+  },
+  // Tab 4: Rinovim
+  { 
+    name: 'Rinovim i plotë', 
+    image: img26, 
+    tab: 4,
+    description: 'Rinovim i plotë i shtëpisë ose biznesit',
+    rating: 4.9,
+    professionals: 25
+  },
+  { 
+    name: 'Kuzhina', 
+    image: img1, 
+    tab: 4,
+    description: 'Instalim dhe rinovim kuzhinash moderne',
+    rating: 4.8,
+    professionals: 22
+  },
+  { 
+    name: 'Banjo', 
+    image: img2, 
+    tab: 4,
+    description: 'Rinovim dhe pajisje për banjo',
+    rating: 4.7,
+    professionals: 20
+  },
+  { 
+    name: 'Sisteme ngrohje & ftohje', 
+    image: img20, 
+    tab: 4,
+    description: 'Instalim dhe mirëmbajtje sistemesh ngrohje/ftohje',
+    rating: 4.8,
+    professionals: 18
   },
 ];
 
@@ -93,8 +202,10 @@ const popularServices = [
   { name: 'Pikturë', icon: '🎨', count: '85+ profesionistë' },
   { name: 'Mobilieri', icon: '🪑', count: '65+ profesionistë' },
   { name: 'Kopshtari', icon: '🌳', count: '95+ profesionistë' },
-  // { name: 'Çati', icon: '🏠', count: '45+ profesionistë' }, // Çati nuk është në seed
   { name: 'Transport', icon: '🚚', count: '110+ profesionistë' },
+  { name: 'Kondicionerë', icon: '❄️', count: '70+ profesionistë' },
+  { name: 'Dysheme & Parket', icon: '🪵', count: '60+ profesionistë' },
+  { name: 'IT & Teknologji', icon: '💻', count: '40+ profesionistë' },
 ];
 
 const stats = [
@@ -382,17 +493,20 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section">
-        <div className="cta-container">
-          <h2 className="cta-title">Gati për të filluar projektin tuaj?</h2>
-          <p className="cta-description">
+      <section className="modern-cta-section">
+        <div className="modern-cta-card">
+          <CheckCircle className="modern-cta-icon" />
+          <h2 className="modern-cta-title">Gati për të filluar projektin tuaj?</h2>
+          <p className="modern-cta-description">
             Lidhuni me profesionistët më të mirë dhe merrni ofertat më të mira për projektin tuaj
           </p>
-          <div className="cta-buttons">
-            <Link to="/request" className="cta-btn-primary">
+          <div className="modern-cta-buttons">
+            <Link to="/request" className="modern-cta-btn primary">
+              <ArrowRight className="btn-icon" />
               Fillo një projekt
             </Link>
-            <Link to="/signup" className="cta-btn-secondary">
+            <Link to="/signup" className="modern-cta-btn secondary">
+              <UserPlus className="btn-icon" />
               Regjistrohu si profesionist
             </Link>
           </div>

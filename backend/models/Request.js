@@ -113,6 +113,61 @@ const Request = {
       if (err) return callback(err);
       callback(null);
     });
+  },
+
+  // NEW: Get all requests with pagination, filtra dhe total
+  getAllPaginated: (options, callback) => {
+    const { page = 1, pageSize = 20, search = '', category = '', city = '', sort = 'newest' } = options;
+    const offset = (page - 1) * pageSize;
+    let where = [];
+    let params = [];
+
+    if (search && search.trim()) {
+      where.push(`(r.title LIKE ? OR r.description LIKE ? OR r.category LIKE ? OR r.city LIKE ? OR r.propertyType LIKE ?)`);
+      const q = `%${search.trim()}%`;
+      params.push(q, q, q, q, q);
+    }
+    if (category) {
+      where.push('r.category = ?');
+      params.push(category);
+    }
+    if (city) {
+      where.push('r.city = ?');
+      params.push(city);
+    }
+
+    let whereSql = where.length ? 'WHERE ' + where.join(' AND ') : '';
+
+    let orderBy = 'r.createdAt DESC';
+    if (sort === 'oldest') orderBy = 'r.createdAt ASC';
+    if (sort === 'budget-high') orderBy = 'CAST(r.budget AS INTEGER) DESC';
+    if (sort === 'budget-low') orderBy = 'CAST(r.budget AS INTEGER) ASC';
+    if (sort === 'urgent') orderBy = `CASE WHEN r.urgency = 'urgent' THEN 0 ELSE 1 END, r.createdAt DESC`;
+
+    // Query for paginated data
+    const sql = `
+      SELECT r.*, u.firstName, u.lastName, u.city as userCity
+      FROM requests r
+      LEFT JOIN users u ON r.userId = u.id
+      ${whereSql}
+      ORDER BY ${orderBy}
+      LIMIT ? OFFSET ?
+    `;
+    // Query for total count
+    const countSql = `
+      SELECT COUNT(*) as total
+      FROM requests r
+      ${whereSql}
+    `;
+
+    const db = require('../config/database');
+    db.all(sql, [...params, pageSize, offset], (err, rows) => {
+      if (err) return callback(err);
+      db.get(countSql, params, (err2, countRow) => {
+        if (err2) return callback(err2);
+        callback(null, { requests: rows, total: countRow ? countRow.total : 0 });
+      });
+    });
   }
 };
 

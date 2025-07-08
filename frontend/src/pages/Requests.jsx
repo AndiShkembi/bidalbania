@@ -5,6 +5,8 @@ import './Requests.css';
 
 const API_URL = 'http://localhost:7700/api';
 
+const PAGE_SIZE = 20;
+
 const Requests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,73 +15,60 @@ const Requests = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [sortBy, setSortBy] = useState('newest');
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const categories = [
-    'Elektricist', 'Hidraulik', 'Pastrim', 'Pikturë', 'Mobilieri', 'Kopshtari'
+    'Elektricist', 'Hidraulik', 'Pastrim', 'Pikturë', 'Mobilieri', 'Kopshtari',
+    'Transport', 'Kondicionerë', 'Dysheme & Parket', 'IT & Teknologji', 'Çati', 'Dyer & Dritare', 'Gips & Suvatime', 'Shtrime pllaka', 'Izolim', 'Dekorim', 'Rinovim i plotë', 'Kuzhina', 'Banjo', 'Sisteme ngrohje & ftohje'
   ];
 
   const cities = [
     'Tiranë', 'Durrës', 'Vlorë', 'Shkodër', 'Elbasan', 'Fier', 'Berat', 'Korçë'
   ];
 
-  // Load requests
+  // Load requests with pagination and filters
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch(`${API_URL}/requests/all`);
+        const params = new URLSearchParams();
+        params.append('page', page);
+        params.append('pageSize', PAGE_SIZE);
+        if (searchQuery) params.append('search', searchQuery);
+        if (selectedCategory) params.append('category', selectedCategory);
+        if (selectedCity) params.append('city', selectedCity);
+        if (sortBy) params.append('sort', sortBy);
+        const res = await fetch(`${API_URL}/requests/all?${params.toString()}`);
         const data = await res.json();
         if (!res.ok) {
           setError(data.message || 'Gabim në ngarkimin e kërkesave.');
           setRequests([]);
+          setTotal(0);
         } else {
-          setRequests(data);
+          setRequests(data.requests || []);
+          setTotal(data.total || 0);
+          console.log('API DATA:', data, 'REQUESTS:', data.requests);
         }
       } catch (err) {
         setError('Gabim në rrjet.');
         setRequests([]);
+        setTotal(0);
       }
       setLoading(false);
     };
     fetchRequests();
-  }, []);
+  }, [page, searchQuery, selectedCategory, selectedCity, sortBy]);
 
-  // Filter and sort requests
-  const filteredRequests = requests
-    .filter(request => {
-      const matchesSearch = !searchQuery || 
-        request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        request.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        request.category.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = !selectedCategory || request.category === selectedCategory;
-      const matchesCity = !selectedCity || request.city === selectedCity;
-      
-      return matchesSearch && matchesCategory && matchesCity;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'newest':
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        case 'oldest':
-          return new Date(a.createdAt) - new Date(b.createdAt);
-        case 'budget-high':
-          return parseInt(b.budget) - parseInt(a.budget);
-        case 'budget-low':
-          return parseInt(a.budget) - parseInt(b.budget);
-        case 'urgent':
-          return a.urgency === 'urgent' ? -1 : 1;
-        default:
-          return 0;
-      }
-    });
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   const clearFilters = () => {
     setSearchQuery('');
     setSelectedCategory('');
     setSelectedCity('');
     setSortBy('newest');
+    setPage(1);
   };
 
   const formatDate = (dateString) => {
@@ -110,6 +99,13 @@ const Requests = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -135,25 +131,25 @@ const Requests = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="filters-card">
+          <div className="filters-grid">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Search className="search-icon" />
               <input
                 type="text"
                 placeholder="Kërko kërkesa..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+                className="search-input"
               />
             </div>
 
             {/* Category Filter */}
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              onChange={(e) => { setSelectedCategory(e.target.value); setPage(1); }}
+              className="filters-select"
             >
               <option value="">Të gjitha kategoritë</option>
               {categories.map(category => (
@@ -164,8 +160,8 @@ const Requests = () => {
             {/* City Filter */}
             <select
               value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              onChange={(e) => { setSelectedCity(e.target.value); setPage(1); }}
+              className="filters-select"
             >
               <option value="">Të gjitha qytetet</option>
               {cities.map(city => (
@@ -176,8 +172,8 @@ const Requests = () => {
             {/* Sort */}
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
+              className="filters-select"
             >
               <option value="newest">Më të rejat</option>
               <option value="oldest">Më të vjetrat</option>
@@ -192,12 +188,12 @@ const Requests = () => {
             <div className="mt-4 flex justify-between items-center">
               <button
                 onClick={clearFilters}
-                className="text-orange-600 hover:text-orange-700 font-medium"
+                className="clear-filters-btn"
               >
                 Fshi filtrat
               </button>
-              <span className="text-sm text-gray-500">
-                {filteredRequests.length} kërkesa u gjetën
+              <span className="filters-summary">
+                {total} kërkesa u gjetën
               </span>
             </div>
           )}
@@ -211,7 +207,12 @@ const Requests = () => {
         )}
 
         {/* Requests Grid */}
-        {filteredRequests.length === 0 ? (
+        {loading ? (
+          <div className="min-h-[200px] flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+            <p className="ml-4 text-gray-600">Duke ngarkuar kërkesat...</p>
+          </div>
+        ) : requests.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <Search className="h-16 w-16 mx-auto" />
@@ -224,70 +225,91 @@ const Requests = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRequests.map((request) => (
-              <div key={request.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
-                        {request.title}
-                      </h3>
-                      <div className="flex items-center text-sm text-gray-500 mb-2">
-                        <User className="h-4 w-4 mr-1" />
-                        {request.firstName} {request.lastName}
-                      </div>
-                    </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getUrgencyColor(request.urgency)}`}>
-                      {getUrgencyText(request.urgency)}
-                    </span>
+          <>
+            <div className="requests-grid">
+              {requests.map((request) => (
+                <div key={request.id} className="request-card">
+                  <div className="request-header">
+                    <h3 className="request-title">{request.title}</h3>
+                    <span className={`urgency-badge ${request.urgency}`}>{getUrgencyText(request.urgency)}</span>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {request.description}
-                  </p>
-
-                  {/* Details */}
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPin className="h-4 w-4 mr-2" />
+                  <div className="request-meta">
+                    <span className="meta-item">
+                      <MapPin className="meta-icon" />
                       {request.city}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Calendar className="h-4 w-4 mr-2" />
+                    </span>
+                    <span className="meta-item">
+                      <Calendar className="meta-icon" />
                       {formatDate(request.createdAt)}
-                    </div>
+                    </span>
                     {request.budget && (
-                      <div className="flex items-center text-sm text-gray-500">
-                        <DollarSign className="h-4 w-4 mr-2" />
+                      <span className="meta-item">
+                        <DollarSign className="meta-icon" />
                         {request.budget}
-                      </div>
+                      </span>
                     )}
                   </div>
-
-                  {/* Footer */}
-                  <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Eye className="h-4 w-4 mr-1" />
-                      {request.views || 0} shikime
+                  <p className="request-description">
+                    {request.description.length > 150
+                      ? `${request.description.substring(0, 150)}...`
+                      : request.description}
+                  </p>
+                  <div className="request-details">
+                    {request.propertyType && (
+                      <span className="detail-tag">{request.propertyType}</span>
+                    )}
+                    {request.propertySize && (
+                      <span className="detail-tag">{request.propertySize}</span>
+                    )}
+                    {request.contactPreference && (
+                      <span className="detail-tag">{request.contactPreference}</span>
+                    )}
+                  </div>
+                  <div className="request-footer">
+                    <div className="request-stats">
+                      <span>👁️ {request.views || 0} pamje</span>
+                      <span>💬 {request.responses || 0} përgjigje</span>
                     </div>
-                    <Link
-                      to={`/request/${request.id}`}
-                      className="text-orange-600 hover:text-orange-700 font-medium text-sm"
-                    >
-                      Shiko detajet →
-                    </Link>
+                    <button className="contact-btn">
+                      Kontakto
+                    </button>
                   </div>
                 </div>
+              ))}
+            </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="pagination">
+                <button
+                  onClick={() => handlePageChange(page - 1)}
+                  disabled={page === 1}
+                  className="pagination-btn"
+                >
+                  &larr;
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => handlePageChange(p)}
+                    className={`pagination-btn${p === page ? ' active' : ''}`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => handlePageChange(page + 1)}
+                  disabled={page === totalPages}
+                  className="pagination-btn"
+                >
+                  &rarr;
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>
   );
 };
 
-export default Requests; 
+export default Requests;
