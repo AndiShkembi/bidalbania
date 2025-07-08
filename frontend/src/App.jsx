@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import RequestForm from './pages/RequestForm';
 import CategoryRequests from './pages/CategoryRequests';
+import Requests from './pages/Requests';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
@@ -30,46 +31,13 @@ function App() {
             <Header />
             <main className="flex-1">
               <Routes>
-                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
+                <Route path="/requests" element={<Requests />} />
                 <Route path="/category/:category" element={<CategoryRequests />} />
-                <Route 
-                  path="/login" 
-                  element={
-                    <PublicRoute>
-                      <Login />
-                    </PublicRoute>
-                  } 
-                />
-                <Route 
-                  path="/signup" 
-                  element={
-                    <PublicRoute>
-                      <Signup />
-                    </PublicRoute>
-                  } 
-                />
-                
-                {/* Protected Routes */}
-                <Route 
-                  path="/profile" 
-                  element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/request" 
-                  element={
-                    <ProtectedRoute>
-                      <RequestForm />
-                    </ProtectedRoute>
-                  } 
-                />
-                
-                {/* Catch all route - redirect to home */}
-                <Route path="*" element={<Home />} />
+                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/request-form" element={<ProtectedRoute><RequestForm /></ProtectedRoute>} />
               </Routes>
             </main>
             <Footer />

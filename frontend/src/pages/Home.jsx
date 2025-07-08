@@ -52,7 +52,7 @@ const categories = [
     professionals: 52
   },
   { 
-    name: 'Pikturë & Lyerje', 
+    name: 'Pikturë', 
     image: img4, 
     tab: 0,
     description: 'Pikturë dhe lyerje profesionale për çdo sipërfaqe',
@@ -75,62 +75,7 @@ const categories = [
     rating: 4.8,
     professionals: 31
   },
-  { 
-    name: 'Punime Druri', 
-    image: img8, 
-    tab: 1,
-    description: 'Punime druri të cilësisë së lartë për shtëpinë',
-    rating: 4.7,
-    professionals: 19
-  },
-  { 
-    name: 'Gardhe', 
-    image: img9, 
-    tab: 1,
-    description: 'Instalim dhe riparim gardhe profesionale',
-    rating: 4.6,
-    professionals: 27
-  },
-  { 
-    name: 'Çati & Ulluqe', 
-    image: img13, 
-    tab: 2,
-    description: 'Riparime çati dhe ulluqesh të specializuara',
-    rating: 4.8,
-    professionals: 15
-  },
-  { 
-    name: 'Dyer & Dritare', 
-    image: img14, 
-    tab: 2,
-    description: 'Instalim dhe riparim dyer dhe dritaresh',
-    rating: 4.7,
-    professionals: 22
-  },
-  { 
-    name: 'Ngrohje & Ftohje', 
-    image: img20, 
-    tab: 3,
-    description: 'Sisteme ngrohje dhe ftohje profesionale',
-    rating: 4.9,
-    professionals: 18
-  },
-  { 
-    name: 'Rinovim Kuzhine', 
-    image: img25, 
-    tab: 4,
-    description: 'Rinovim i plotë kuzhine me dizajn modern',
-    rating: 4.8,
-    professionals: 25
-  },
-  { 
-    name: 'Rinovim Banjo', 
-    image: img26, 
-    tab: 4,
-    description: 'Rinovim banjo me materiale të cilësisë së lartë',
-    rating: 4.7,
-    professionals: 21
-  },
+  // Çati nuk është në seed, por po e lëmë për UI
   { 
     name: 'Transport', 
     image: img5, 
@@ -138,14 +83,6 @@ const categories = [
     description: 'Shërbime transporti për çdo lloj ngarkese',
     rating: 4.6,
     professionals: 33
-  },
-  { 
-    name: 'Inspektim Shtëpie', 
-    image: img29, 
-    tab: 4,
-    description: 'Inspektim profesional i shtëpisë para blerjes',
-    rating: 4.9,
-    professionals: 12
   },
 ];
 
@@ -156,7 +93,7 @@ const popularServices = [
   { name: 'Pikturë', icon: '🎨', count: '85+ profesionistë' },
   { name: 'Mobilieri', icon: '🪑', count: '65+ profesionistë' },
   { name: 'Kopshtari', icon: '🌳', count: '95+ profesionistë' },
-  { name: 'Çati', icon: '🏠', count: '45+ profesionistë' },
+  // { name: 'Çati', icon: '🏠', count: '45+ profesionistë' }, // Çati nuk është në seed
   { name: 'Transport', icon: '🚚', count: '110+ profesionistë' },
 ];
 
@@ -394,11 +331,16 @@ const Home = () => {
 
           <div className="services-grid">
             {popularServices.map((service, index) => (
-              <div key={index} className="service-card">
+              <Link
+                key={index}
+                to={`/category/${encodeURIComponent(service.name)}`}
+                className="service-card"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
                 <span className="service-icon">{service.icon}</span>
                 <h3 className="service-name">{service.name}</h3>
                 <p className="service-count">{service.count}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -31,29 +31,88 @@ const Request = {
     });
   },
 
-  // NEW: Search requests by title or description
+  // IMPROVED: Search requests by title, description, category, or city
   search: (query, callback) => {
     const q = `%${query}%`;
-    db.all(
-      'SELECT * FROM requests WHERE title LIKE ? OR description LIKE ? ORDER BY createdAt DESC LIMIT 10',
-      [q, q],
-      (err, rows) => {
-        if (err) return callback(err);
-        callback(null, rows);
-      }
-    );
+    const sql = `
+      SELECT r.*, u.firstName, u.lastName, u.city as userCity 
+      FROM requests r 
+      LEFT JOIN users u ON r.userId = u.id 
+      WHERE r.title LIKE ? 
+         OR r.description LIKE ? 
+         OR r.category LIKE ? 
+         OR r.city LIKE ? 
+         OR r.propertyType LIKE ?
+      ORDER BY 
+        CASE 
+          WHEN r.title LIKE ? THEN 1
+          WHEN r.category LIKE ? THEN 2
+          WHEN r.city LIKE ? THEN 3
+          ELSE 4
+        END,
+        r.createdAt DESC 
+      LIMIT 20
+    `;
+    
+    db.all(sql, [q, q, q, q, q, q, q, q], (err, rows) => {
+      if (err) return callback(err);
+      callback(null, rows);
+    });
   },
 
-  // NEW: Find requests by category
+  // IMPROVED: Find requests by category with user info
   findByCategory: (category, callback) => {
-    db.all(
-      'SELECT * FROM requests WHERE category = ? ORDER BY createdAt DESC',
-      [category],
-      (err, rows) => {
-        if (err) return callback(err);
-        callback(null, rows);
-      }
-    );
+    const sql = `
+      SELECT r.*, u.firstName, u.lastName, u.city as userCity 
+      FROM requests r 
+      LEFT JOIN users u ON r.userId = u.id 
+      WHERE r.category = ? 
+      ORDER BY r.createdAt DESC
+    `;
+    
+    db.all(sql, [category], (err, rows) => {
+      if (err) return callback(err);
+      callback(null, rows);
+    });
+  },
+
+  // NEW: Get all requests with user info (for public browsing)
+  getAll: (callback) => {
+    const sql = `
+      SELECT r.*, u.firstName, u.lastName, u.city as userCity 
+      FROM requests r 
+      LEFT JOIN users u ON r.userId = u.id 
+      ORDER BY r.createdAt DESC 
+      LIMIT 50
+    `;
+    
+    db.all(sql, (err, rows) => {
+      if (err) return callback(err);
+      callback(null, rows);
+    });
+  },
+
+  // NEW: Get request by ID with user info
+  findById: (id, callback) => {
+    const sql = `
+      SELECT r.*, u.firstName, u.lastName, u.email, u.phone, u.city as userCity 
+      FROM requests r 
+      LEFT JOIN users u ON r.userId = u.id 
+      WHERE r.id = ?
+    `;
+    
+    db.get(sql, [id], (err, row) => {
+      if (err) return callback(err);
+      callback(null, row);
+    });
+  },
+
+  // NEW: Update request views count
+  incrementViews: (id, callback) => {
+    db.run('UPDATE requests SET views = views + 1 WHERE id = ?', [id], (err) => {
+      if (err) return callback(err);
+      callback(null);
+    });
   }
 };
 

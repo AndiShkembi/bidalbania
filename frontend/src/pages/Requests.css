@@ -1,0 +1,260 @@
+/* Requests Page Styles */
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom scrollbar for filters */
+select::-webkit-scrollbar {
+  width: 6px;
+}
+
+select::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+select::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Hover effects */
+.requests-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.requests-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .requests-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Filter button styles */
+.filter-button {
+  transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+  background-color: #f3f4f6;
+}
+
+.filter-button.active {
+  background-color: #ff5532;
+  color: white;
+}
+
+/* Search input focus */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 85, 50, 0.1);
+}
+
+/* Category badges */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Urgency indicators */
+.urgency-urgent {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.urgency-high {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.urgency-normal {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.urgency-low {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: white;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.pagination-button:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.pagination-button.active {
+  background-color: #ff5532;
+  border-color: #ff5532;
+  color: white;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #374151;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75rem;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #ff5532;
+  outline-offset: 2px;
+}
+
+/* Custom checkbox styles */
+.custom-checkbox {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.25rem;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.custom-checkbox:checked {
+  background-color: #ff5532;
+  border-color: #ff5532;
+}
+
+.custom-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  .text-responsive-lg {
+    font-size: 1.125rem;
+  }
+  
+  .text-responsive-xl {
+    font-size: 1.25rem;
+  }
+  
+  .text-responsive-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+/* Custom select arrow */
+.custom-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+} 

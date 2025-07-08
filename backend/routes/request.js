@@ -3,16 +3,18 @@ const router = express.Router();
 const requestController = require('../controllers/requestController');
 const auth = require('../middleware/auth');
 
-// Create a new request
+// Create a new request (requires auth)
 router.post('/', auth, requestController.createRequest);
 
-// Get requests for the logged-in user
+// Get requests for the logged-in user (requires auth)
 router.get('/', auth, requestController.getUserRequests);
 
-// NEW: Search requests (public)
+// Public routes (no auth required)
 router.get('/search', requestController.searchRequests);
-
-// NEW: Get requests by category (public)
 router.get('/category/:category', requestController.getByCategory);
+router.get('/all', requestController.getAllRequests);
+router.get('/recent', requestController.getRecentRequests);
+router.get('/popular-categories', requestController.getPopularCategories);
+router.get('/:id', requestController.getRequestById);
 
 module.exports = router; 
