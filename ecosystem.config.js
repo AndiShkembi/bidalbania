@@ -24,7 +24,7 @@ module.exports = {
     {
       name: 'bidalbania-frontend',
       script: 'npx',
-      args: 'vite preview --host 0.0.0.0 --port 3000',
+      args: 'vite preview --host 0.0.0.0 --port 8000',
       cwd: './frontend',
       instances: 1,
       autorestart: true,
@@ -32,11 +32,11 @@ module.exports = {
       max_memory_restart: '1G',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000
+        PORT: 8000
       },
       env_production: {
         NODE_ENV: 'production',
-        PORT: 3000
+        PORT: 8000
       },
       error_file: '../logs/frontend-error.log',
       out_file: '../logs/frontend-out.log',
