@@ -1,0 +1,311 @@
+/* Sfondi i faqes me gradient të butë */
+.request-view-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.request-view-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.request-view-card {
+  background: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(60, 72, 100, 0.18);
+  padding: 2.5rem 2rem 2rem 2rem;
+  position: relative;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.request-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.request-view-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1a2340;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.urgency-badge {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.4em 1em;
+  border-radius: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px 0 rgba(255, 193, 7, 0.08);
+}
+.urgency-badge.urgent { background: #ff1744; color: #fff; }
+.urgency-badge.high { background: #ff9800; color: #fff; }
+.urgency-badge.normal { background: #2196f3; color: #fff; }
+.urgency-badge.low { background: #cfd8dc; color: #263238; }
+
+.request-view-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  font-size: 1.08rem;
+  color: #4a5677;
+  margin-bottom: 0.5rem;
+}
+.request-view-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: #f5f7fa;
+  border-radius: 1em;
+  padding: 0.35em 1em;
+  font-weight: 500;
+  box-shadow: 0 1px 4px 0 rgba(60, 72, 100, 0.06);
+}
+.request-view-meta svg {
+  width: 1.2em;
+  height: 1.2em;
+  color: #2196f3;
+}
+
+.request-view-description {
+  background: #f7fafc;
+  border-radius: 1.2em;
+  padding: 1.2em 1.5em;
+  box-shadow: 0 1px 4px 0 rgba(60, 72, 100, 0.06);
+}
+.request-view-description h3 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.15rem;
+  color: #1a2340;
+  font-weight: 600;
+}
+.request-view-description p {
+  margin: 0;
+  color: #374151;
+  font-size: 1.08rem;
+}
+
+.request-view-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: 1.05rem;
+  color: #4a5677;
+  background: #f5f7fa;
+  border-radius: 1em;
+  padding: 1em 1.5em;
+  box-shadow: 0 1px 4px 0 rgba(60, 72, 100, 0.06);
+}
+.request-view-details b {
+  color: #1a2340;
+}
+
+.request-view-stats {
+  display: flex;
+  gap: 1.5em;
+  font-size: 1.05rem;
+  color: #7b879c;
+  align-items: center;
+}
+.request-view-stats svg {
+  color: #ff9800;
+  margin-right: 0.3em;
+}
+
+.request-view-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5em;
+}
+.contact-btn {
+  background: #f2f3fa;
+  color: #0a0e3f;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: 1px solid #c3c6e6;
+  border-radius: 1.1em;
+  padding: 0.38em 1.2em;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.contact-btn:hover, .contact-btn:focus {
+  background: #e3e5f5;
+  color: #0a0e3f;
+  border-color: #aeb2d6;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: #2196f3;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 1.2em;
+  font-size: 1.05rem;
+  transition: color 0.18s;
+}
+.back-link:hover {
+  color: #1565c0;
+}
+
+/* Loading & error states */
+.loading-state, .error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #2196f3;
+  margin-top: 2em;
+}
+.error-message {
+  color: #ff1744;
+}
+
+.back-link,
+.back-link:visited,
+.back-link:active,
+.back-link:hover,
+.back-link:focus,
+.contact-btn,
+.contact-btn:visited,
+.contact-btn:active,
+.contact-btn:hover,
+.contact-btn:focus,
+a,
+a:visited,
+a:active,
+a:hover,
+a:focus {
+  text-decoration: none !important;
+  outline: none;
+}
+
+/* Modal Overlay & Content */
+.modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(20, 24, 40, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInModal 0.2s;
+}
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-content {
+  background: #fff;
+  border-radius: 1.3em;
+  box-shadow: 0 8px 32px 0 rgba(60, 72, 100, 0.18);
+  padding: 2.2em 1.5em 1.5em 1.5em;
+  min-width: 320px;
+  max-width: 95vw;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  animation: fadeInUp 0.3s cubic-bezier(.23,1.01,.32,1) both;
+}
+.modal-close {
+  position: absolute;
+  top: 1.1em;
+  right: 1.1em;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: #7b879c;
+  cursor: pointer;
+  transition: color 0.18s;
+  z-index: 2;
+}
+.modal-close:hover {
+  color: #0a0e3f;
+}
+
+/* Contact Form Styles */
+.contact-form-title {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #0a0e3f;
+  margin-bottom: 0.7em;
+  text-align: center;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+.contact-input, .contact-textarea {
+  width: 100%;
+  border: 1px solid #e0e7ef;
+  border-radius: 0.7em;
+  padding: 0.6em 1em;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #f7fafd;
+  color: #1a2340;
+  transition: border 0.15s;
+  outline: none;
+  resize: none;
+}
+.contact-input:focus, .contact-textarea:focus {
+  border-color: #b3c6f7;
+}
+.contact-form-error {
+  color: #d32f2f;
+  font-size: 0.98rem;
+  text-align: center;
+  margin-bottom: 0.2em;
+}
+.contact-form-success {
+  text-align: center;
+  padding: 1.2em 0.2em;
+}
+.contact-form-success h2 {
+  color: #0a0e3f;
+  font-size: 1.15rem;
+  margin-bottom: 0.5em;
+}
+.contact-form-success p {
+  color: #4a5677;
+  font-size: 1rem;
+  margin-bottom: 1.2em;
+}
+
+@media (max-width: 700px) {
+  .request-view-card {
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+    border-radius: 1.2rem;
+  }
+  .request-view-title {
+    font-size: 1.3rem;
+  }
+  .request-view-container {
+    max-width: 100vw;
+    padding: 0 2px;
+  }
+} 

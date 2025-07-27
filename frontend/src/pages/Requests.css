@@ -160,25 +160,42 @@
   margin: 0;
   flex: 1;
 }
+/* Minimalist urgency/status badge */
 .urgency-badge {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 500;
-  border-radius: 8px;
-  padding: 0.2em 0.7em;
-  margin-left: 0.5em;
-  display: inline-block;
+  padding: 0.18em 0.8em;
+  border-radius: 0.9em;
+  border: 1px solid #e0e7ef;
+  box-shadow: none;
+  background: #f7fafd;
+  color: #1976d2;
+  letter-spacing: 0.01em;
+  min-width: unset;
+  min-height: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
 }
 .urgency-badge.urgent {
   background: #ffeaea;
   color: #d32f2f;
+  border-color: #ffd6d6;
 }
 .urgency-badge.high {
-  background: #fff4e5;
-  color: #ff9800;
+  background: #fff6e0;
+  color: #f57c00;
+  border-color: #ffe0b2;
 }
 .urgency-badge.normal {
-  background: #eaf6ff;
+  background: #e3f0fc;
   color: #1976d2;
+  border-color: #b3d4fc;
+}
+.urgency-badge.low {
+  background: #f4f6f8;
+  color: #607d8b;
+  border-color: #cfd8dc;
 }
 
 .request-meta {
@@ -233,19 +250,25 @@
   font-size: 0.95rem;
   color: #888;
 }
+/* Minimalist Contact Button */
 .contact-btn {
-  background: #ff9800;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.45em 1.2em;
-  font-size: 1rem;
-  font-weight: 500;
+  background: #f2f3fa;
+  color: #0a0e3f;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: 1px solid #c3c6e6;
+  border-radius: 1.1em;
+  padding: 0.38em 1.2em;
+  box-shadow: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  margin-left: auto;
+  margin-right: 0;
 }
-.contact-btn:hover {
-  background: #ff7700;
+.contact-btn:hover, .contact-btn:focus {
+  background: #e3e5f5;
+  color: #0a0e3f;
+  border-color: #aeb2d6;
 }
 
 /* Responsive tweaks */
@@ -507,4 +530,23 @@ select::-webkit-scrollbar-thumb:hover {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+} 
+
+.request-card-link,
+.request-card-link:visited,
+.request-card-link:active,
+.request-card-link:hover,
+.request-card-link:focus,
+.request-card a,
+.request-card a:visited,
+.request-card a:active,
+.request-card a:hover,
+.request-card a:focus,
+.contact-btn,
+.contact-btn:visited,
+.contact-btn:active,
+.contact-btn:hover,
+.contact-btn:focus {
+  text-decoration: none !important;
+  outline: none;
 } 

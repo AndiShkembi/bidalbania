@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Search, ArrowLeft, MapPin, Calendar, DollarSign, Clock, AlertCircle } from 'lucide-react';
+import { Search, ArrowLeft, MapPin, Calendar, DollarSign, Clock, AlertCircle, Eye, MessageSquare } from 'lucide-react';
 import './CategoryRequests.css';
 
 const API_URL = 'http://localhost:7700/api';
@@ -172,59 +172,42 @@ const CategoryRequests = () => {
           ) : (
             <>
               <div className="requests-grid">
-                {requests.map((req) => (
-                  <div key={req.id} className="request-card">
-                    <div className="request-header">
-                      <h3 className="request-title">{req.title}</h3>
-                      {getUrgencyBadge(req.urgency)}
-                    </div>
-                    
-                    <div className="request-meta">
-                      <span className="meta-item">
-                        <MapPin className="meta-icon" />
-                        {req.city}
-                      </span>
-                      <span className="meta-item">
-                        <Calendar className="meta-icon" />
-                        {formatDate(req.createdAt)}
-                      </span>
-                      {req.budget && (
+                {requests.map((request) => (
+                  <Link to={`/request/${request.id}`} key={request.id} className="request-card-link">
+                    <div className="request-card">
+                      <div className="request-header">
+                        <h3 className="request-title">{request.title}</h3>
+                        <span className={`urgency-badge ${request.urgency}`}>{getUrgencyBadge(request.urgency)}</span>
+                      </div>
+                      <div className="request-meta">
+                        <span className="meta-item">
+                          <MapPin className="meta-icon" />
+                          {request.city}
+                        </span>
+                        <span className="meta-item">
+                          <Calendar className="meta-icon" />
+                          {formatDate(request.desiredDate || request.createdAt)}
+                        </span>
                         <span className="meta-item">
                           <DollarSign className="meta-icon" />
-                          {req.budget}
+                          {request.budget} Lekë
                         </span>
-                      )}
-                    </div>
-                    
-                    <p className="request-description">
-                      {req.description.length > 150 
-                        ? `${req.description.substring(0, 150)}...` 
-                        : req.description
-                      }
-                    </p>
-                    
-                    <div className="request-details">
-                      {req.propertyType && (
-                        <span className="detail-tag">{req.propertyType}</span>
-                      )}
-                      {req.propertySize && (
-                        <span className="detail-tag">{req.propertySize}</span>
-                      )}
-                      {req.contactPreference && (
-                        <span className="detail-tag">{req.contactPreference}</span>
-                      )}
-                    </div>
-                    
-                    <div className="request-footer">
-                      <div className="request-stats">
-                        <span>👁️ {req.views || 0} pamje</span>
-                        <span>💬 {req.responses || 0} përgjigje</span>
                       </div>
-                      <button className="contact-btn">
-                        Kontakto
-                      </button>
+                      <div className="request-description">
+                        {request.description.length > 120 ? request.description.slice(0, 120) + '...' : request.description}
+                      </div>
+                      <div className="request-tags">
+                        {request.propertyType && <span className="request-tag">{request.propertyType}</span>}
+                        {request.propertySize && <span className="request-tag">{request.propertySize}</span>}
+                        {request.contactPreference && <span className="request-tag">{request.contactPreference}</span>}
+                      </div>
+                      <div className="request-footer">
+                        <span className="request-stats"><Eye className="footer-icon" /> {request.views || 0} pamje</span>
+                        <span className="request-stats"><MessageSquare className="footer-icon" /> {request.responses || 0} përgjigje</span>
+                        <button className="contact-btn" onClick={e => { e.preventDefault(); }}>Kontakto</button>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
               {/* Pagination */}
