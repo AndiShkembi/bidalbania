@@ -17,9 +17,9 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
-  // If we're accessing from the domain, use the same protocol as the current page
+  // If we're accessing from the domain, always use HTTP for API (no SSL on port 7700)
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    return `${protocol}//bidalbania.al:7700/api`;
+    return 'http://bidalbania.al:7700/api';
   }
   
   // For localhost or development
@@ -27,8 +27,8 @@ const getApiUrl = () => {
     return 'http://localhost:7700/api';
   }
   
-  // For production, use the same protocol as the current page
-  return `${protocol}//bidalbania.al:7700/api`;
+  // For production, always use HTTP for API (no SSL on port 7700)
+  return 'http://bidalbania.al:7700/api';
 };
 
 export const API_URL = getApiUrl();

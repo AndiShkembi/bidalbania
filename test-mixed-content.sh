@@ -42,14 +42,7 @@ else
 fi
 
 echo ""
-echo "🔍 Testing API via HTTPS..."
-if curl -s https://bidalbania.al:7700/api/requests/all > /dev/null; then
-    echo "✅ API accessible via HTTPS"
-    HTTPS_API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://bidalbania.al:7700/api/requests/all)
-    echo "   HTTPS API Status: $HTTPS_API_STATUS"
-else
-    echo "❌ API not accessible via HTTPS"
-fi
+
 
 echo ""
 echo "🌐 Testing CORS Protocol Matching..."
@@ -65,13 +58,13 @@ curl -H "Origin: http://bidalbania.al" \
      http://bidalbania.al:7700/api/requests/all
 
 echo ""
-echo "🔍 Testing CORS from HTTPS frontend to HTTPS API..."
+echo "🔍 Testing CORS from HTTPS frontend to HTTP API..."
 curl -H "Origin: https://bidalbania.al" \
      -H "Access-Control-Request-Method: GET" \
      -H "Access-Control-Request-Headers: Content-Type" \
      -X OPTIONS \
-     -s -o /dev/null -w "HTTPS→HTTPS CORS Status: %{http_code}\n" \
-     https://bidalbania.al:7700/api/requests/all
+     -s -o /dev/null -w "HTTPS→HTTP CORS Status: %{http_code}\n" \
+     http://bidalbania.al:7700/api/requests/all
 
 echo ""
 echo "🔍 Testing CORS from HTTPS frontend to HTTP API (Mixed Content)..."
@@ -93,40 +86,39 @@ curl -H "Origin: http://bidalbania.al" \
      http://bidalbania.al:7700/api/requests/all
 
 echo ""
-echo "🔍 Testing API call from HTTPS origin..."
+echo "🔍 Testing API call from HTTPS origin to HTTP API..."
 curl -H "Origin: https://bidalbania.al" \
      -H "Content-Type: application/json" \
-     -s -o /dev/null -w "HTTPS API Call Status: %{http_code}\n" \
-     https://bidalbania.al:7700/api/requests/all
+     -s -o /dev/null -w "HTTPS→HTTP API Call Status: %{http_code}\n" \
+     http://bidalbania.al:7700/api/requests/all
 
 echo ""
 echo "📋 Configuration Summary:"
 echo "-------------------------"
 echo "✅ Frontend Protocol Detection: Enabled"
-echo "✅ API Protocol Matching: Enabled"
+echo "✅ API HTTP Only: Configured"
 echo "✅ CORS for both HTTP and HTTPS: Configured"
-echo "✅ Mixed Content Prevention: Active"
+echo "✅ Mixed Content Allowed: API calls from HTTPS to HTTP"
 
 echo ""
 echo "🔧 Expected Behavior:"
 echo "--------------------"
 echo "1. If user visits http://bidalbania.al → API calls use http://bidalbania.al:7700/api"
-echo "2. If user visits https://bidalbania.al → API calls use https://bidalbania.al:7700/api"
-echo "3. No mixed content errors should occur"
-echo "4. CORS should work for both protocols"
+echo "2. If user visits https://bidalbania.al → API calls use http://bidalbania.al:7700/api"
+echo "3. Mixed content is allowed for API calls (HTTP from HTTPS)"
+echo "4. CORS should work for both frontend protocols"
 
 echo ""
 echo "⚠️  Troubleshooting:"
 echo "-------------------"
-echo "• If HTTPS API fails: Check SSL certificate on port 7700"
 echo "• If HTTP API fails: Check if backend is running on port 7700"
 echo "• If CORS fails: Check backend CORS configuration"
-echo "• If mixed content: Frontend should automatically match protocol"
+echo "• Mixed content is expected: HTTPS frontend → HTTP API"
+echo "• SSL certificate not needed for API (HTTP only)"
 
 echo ""
 echo "🌐 Test URLs:"
 echo "-------------"
 echo "Frontend HTTP:  http://bidalbania.al"
 echo "Frontend HTTPS: https://bidalbania.al"
-echo "API HTTP:       http://bidalbania.al:7700/api"
-echo "API HTTPS:      https://bidalbania.al:7700/api" 
+echo "API:            http://bidalbania.al:7700/api (HTTP only)" 
