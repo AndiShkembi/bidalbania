@@ -30,7 +30,11 @@ app.use(cors({
     'http://bidalbania.al:7700',
     'http://www.bidalbania.al:7700',
     'http://bidalbania.al:8085',
-    'http://www.bidalbania.al:8085'
+    'http://www.bidalbania.al:8085',
+    'https://bidalbania.al:7700',
+    'https://www.bidalbania.al:7700',
+    'https://bidalbania.al:8085',
+    'https://www.bidalbania.al:8085'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

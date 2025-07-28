@@ -3,8 +3,9 @@ const getApiUrl = () => {
   // Check if we're in development or production
   const isDevelopment = import.meta.env.DEV;
   
-  // Get the current hostname
+  // Get the current hostname and protocol
   const hostname = window.location.hostname;
+  const protocol = window.location.protocol; // Get current protocol (http: or https:)
   
   // If we're accessing from a specific IP, use that IP for the API
   if (hostname === '192.168.1.237') {
@@ -16,9 +17,9 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
-  // If we're accessing from the domain, use the domain for the API
+  // If we're accessing from the domain, use the same protocol as the current page
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    return 'http://bidalbania.al:7700/api';
+    return `${protocol}//bidalbania.al:7700/api`;
   }
   
   // For localhost or development
@@ -26,8 +27,8 @@ const getApiUrl = () => {
     return 'http://localhost:7700/api';
   }
   
-  // For production (you can change this to your domain)
-  return 'http://bidalbania.al:7700/api';
+  // For production, use the same protocol as the current page
+  return `${protocol}//bidalbania.al:7700/api`;
 };
 
 export const API_URL = getApiUrl();
