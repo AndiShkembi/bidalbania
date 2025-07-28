@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Star, Users, Award, Shield, Clock, MapPin, ArrowRight, X, CheckCircle, UserPlus } from 'lucide-react';
+import { API_URL } from '../config/api.js';
 import homeSearchImage from '../assets/home-search.jpg';
 import img1 from '../assets/1.webp';
 import img2 from '../assets/2.webp';
@@ -222,7 +223,7 @@ const Home = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
-  const API_URL = 'http://localhost:7700/api';
+  // API_URL is now imported at the top
 
   // Search suggestions
   useEffect(() => {

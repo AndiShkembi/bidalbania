@@ -8,10 +8,25 @@ const app = express();
 const PORT = process.env.PORT || 7700;
 
 app.use(cors({
-  origin: ['http://localhost:8085', 'http://localhost:8080', 'http://127.0.0.1:8085', 'http://127.0.0.1:8080'],
+  origin: [
+    'http://localhost:8085', 
+    'http://localhost:8080', 
+    'http://127.0.0.1:8085', 
+    'http://127.0.0.1:8080',
+    'http://192.168.1.237:8080',
+    'http://192.168.1.237:8085',
+    'http://192.168.1.237:7700',
+    'http://localhost:7700',
+    'http://161.35.211.94:8080',
+    'http://161.35.211.94:8085',
+    'http://161.35.211.94:7700',
+    'https://161.35.211.94:8080',
+    'https://161.35.211.94:8085',
+    'https://161.35.211.94:7700'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept']
 }));
 app.use(express.json());
 

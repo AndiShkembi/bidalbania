@@ -14,21 +14,27 @@ const Request = {
       contactPreference, additionalRequirements, photos
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
-    db.run(sql, [
-      userId, title, description, category, city, address, postalCode, 
-      desiredDate, budget, budgetType, urgency, propertyType, propertySize, 
-      contactPreference, additionalRequirements, photos
-    ], function(err) {
-      if (err) return callback(err);
-      callback(null, { id: this.lastID, ...request });
-    });
+    try {
+      const stmt = db.prepare(sql);
+      const result = stmt.run([
+        userId, title, description, category, city, address, postalCode, 
+        desiredDate, budget, budgetType, urgency, propertyType, propertySize, 
+        contactPreference, additionalRequirements, photos
+      ]);
+      callback(null, { id: result.lastInsertRowid, ...request });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   findByUserId: (userId, callback) => {
-    db.all('SELECT * FROM requests WHERE userId = ? ORDER BY createdAt DESC', [userId], (err, rows) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare('SELECT * FROM requests WHERE userId = ? ORDER BY createdAt DESC');
+      const rows = stmt.all([userId]);
       callback(null, rows);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // IMPROVED: Search requests by title, description, category, or city
@@ -54,10 +60,13 @@ const Request = {
       LIMIT 20
     `;
     
-    db.all(sql, [q, q, q, q, q, q, q, q], (err, rows) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare(sql);
+      const rows = stmt.all([q, q, q, q, q, q, q, q]);
       callback(null, rows);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // IMPROVED: Find requests by category with user info
@@ -70,10 +79,13 @@ const Request = {
       ORDER BY r.createdAt DESC
     `;
     
-    db.all(sql, [category], (err, rows) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare(sql);
+      const rows = stmt.all([category]);
       callback(null, rows);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // NEW: Get all requests with user info (for public browsing)
@@ -86,10 +98,13 @@ const Request = {
       LIMIT 50
     `;
     
-    db.all(sql, (err, rows) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare(sql);
+      const rows = stmt.all();
       callback(null, rows);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // NEW: Get request by ID with user info
@@ -101,18 +116,24 @@ const Request = {
       WHERE r.id = ?
     `;
     
-    db.get(sql, [id], (err, row) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare(sql);
+      const row = stmt.get([id]);
       callback(null, row);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // NEW: Update request views count
   incrementViews: (id, callback) => {
-    db.run('UPDATE requests SET views = views + 1 WHERE id = ?', [id], (err) => {
-      if (err) return callback(err);
+    try {
+      const stmt = db.prepare('UPDATE requests SET views = views + 1 WHERE id = ?');
+      stmt.run([id]);
       callback(null);
-    });
+    } catch (err) {
+      callback(err);
+    }
   },
 
   // NEW: Get all requests with pagination, filtra dhe total
@@ -160,14 +181,15 @@ const Request = {
       ${whereSql}
     `;
 
-    const db = require('../config/database');
-    db.all(sql, [...params, pageSize, offset], (err, rows) => {
-      if (err) return callback(err);
-      db.get(countSql, params, (err2, countRow) => {
-        if (err2) return callback(err2);
-        callback(null, { requests: rows, total: countRow ? countRow.total : 0 });
-      });
-    });
+    try {
+      const stmt = db.prepare(sql);
+      const rows = stmt.all([...params, pageSize, offset]);
+      const countStmt = db.prepare(countSql);
+      const countRow = countStmt.get(params);
+      callback(null, { requests: rows, total: countRow ? countRow.total : 0 });
+    } catch (err) {
+      callback(err);
+    }
   }
 };
 

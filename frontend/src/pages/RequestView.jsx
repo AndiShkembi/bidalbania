@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Calendar, DollarSign, User, Home, Phone, MessageSquare, Eye, ArrowLeft } from 'lucide-react';
+import { API_URL } from '../config/api.js';
 import './Requests.css';
 import './RequestView.css';
 import ContactModal from './ContactModal';
-
-const API_URL = 'http://localhost:7700/api';
 
 const urgencyLabels = {
   urgent: 'URGJENTE',

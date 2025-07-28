@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { User, Mail, Phone, MapPin, Edit, Save, X, LogOut, AlertCircle, CheckCircle, Loader } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { API_URL } from '../config/api.js';
 import './Profile.css';
-
-const API_URL = 'http://localhost:7700/api';
 
 const Profile = () => {
   const { user, logout: authLogout } = useAuth();

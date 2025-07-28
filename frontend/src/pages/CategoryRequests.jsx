@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Search, ArrowLeft, MapPin, Calendar, DollarSign, Clock, AlertCircle, Eye, MessageSquare } from 'lucide-react';
+import { API_URL } from '../config/api.js';
 import './CategoryRequests.css';
-
-const API_URL = 'http://localhost:7700/api';
 const PAGE_SIZE = 20;
 
 const CategoryRequests = () => {

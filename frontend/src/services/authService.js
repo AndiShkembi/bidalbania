@@ -1,14 +1,8 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:7700/api';
+import { API_URL, apiConfig } from '../config/api.js';
 
 // Krijoj një instancë të axios me konfigurim bazë
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const api = axios.create(apiConfig);
 
 // Interceptor për të shtuar token-in në çdo kërkesë
 api.interceptors.request.use((config) => {

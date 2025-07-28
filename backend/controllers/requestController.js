@@ -101,10 +101,13 @@ exports.getPopularCategories = (req, res) => {
   `;
   
   const db = require('../config/database');
-  db.all(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: 'Gabim në marrjen e kategorive.' });
+  try {
+    const stmt = db.prepare(sql);
+    const results = stmt.all();
     res.json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Gabim në marrjen e kategorive.' });
+  }
 };
 
 // NEW: Get recent requests
@@ -119,8 +122,11 @@ exports.getRecentRequests = (req, res) => {
   `;
   
   const db = require('../config/database');
-  db.all(sql, [limit], (err, results) => {
-    if (err) return res.status(500).json({ message: 'Gabim në marrjen e kërkesave.' });
+  try {
+    const stmt = db.prepare(sql);
+    const results = stmt.all([limit]);
     res.json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Gabim në marrjen e kërkesave.' });
+  }
 }; 

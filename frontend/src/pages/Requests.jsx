@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Calendar, DollarSign, Clock, Filter, Eye, User, MessageSquare } from 'lucide-react';
+import { API_URL } from '../config/api.js';
 import './Requests.css';
-
-const API_URL = 'http://localhost:7700/api';
 
 const PAGE_SIZE = 20;
 
