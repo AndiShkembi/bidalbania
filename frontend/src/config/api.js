@@ -16,13 +16,18 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
+  // If we're accessing from the domain, use the domain for the API
+  if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
+    return 'https://bidalbania.al:7700/api';
+  }
+  
   // For localhost or development
   if (isDevelopment || hostname === 'localhost' || hostname === '127.0.0.1') {
     return 'http://localhost:7700/api';
   }
   
   // For production (you can change this to your domain)
-  return 'http://localhost:7700/api';
+  return 'https://bidalbania.al:7700/api';
 };
 
 export const API_URL = getApiUrl();

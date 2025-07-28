@@ -78,6 +78,14 @@ curl -H "Origin: http://161.35.211.94:8080" \
      -v http://localhost:7700/api/requests/all 2>&1 | grep -E "(Access-Control|HTTP)"
 
 echo ""
+echo "Testing CORS preflight from bidalbania.al..."
+curl -H "Origin: https://bidalbania.al" \
+     -H "Access-Control-Request-Method: GET" \
+     -H "Access-Control-Request-Headers: Content-Type" \
+     -X OPTIONS \
+     -v http://localhost:7700/api/requests/all 2>&1 | grep -E "(Access-Control|HTTP)"
+
+echo ""
 echo "🔍 Testing API endpoint..."
 echo "-------------------------"
 

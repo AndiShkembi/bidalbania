@@ -22,7 +22,11 @@ app.use(cors({
     'http://161.35.211.94:7700',
     'https://161.35.211.94:8080',
     'https://161.35.211.94:8085',
-    'https://161.35.211.94:7700'
+    'https://161.35.211.94:7700',
+    'https://bidalbania.al',
+    'https://www.bidalbania.al',
+    'http://bidalbania.al',
+    'http://www.bidalbania.al'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
