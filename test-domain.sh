@@ -8,14 +8,6 @@ echo "🌐 Testing Domain CORS..."
 echo "------------------------"
 
 # Test CORS preflight from domain
-echo "🔍 Testing CORS preflight from https://bidalbania.al..."
-curl -H "Origin: https://bidalbania.al" \
-     -H "Access-Control-Request-Method: GET" \
-     -H "Access-Control-Request-Headers: Content-Type" \
-     -X OPTIONS \
-     -v http://localhost:7700/api/requests/all 2>&1 | grep -E "(Access-Control|HTTP)"
-
-echo ""
 echo "🔍 Testing CORS preflight from http://bidalbania.al..."
 curl -H "Origin: http://bidalbania.al" \
      -H "Access-Control-Request-Method: GET" \
@@ -24,8 +16,16 @@ curl -H "Origin: http://bidalbania.al" \
      -v http://localhost:7700/api/requests/all 2>&1 | grep -E "(Access-Control|HTTP)"
 
 echo ""
-echo "🔍 Testing CORS preflight from https://www.bidalbania.al..."
-curl -H "Origin: https://www.bidalbania.al" \
+echo "🔍 Testing CORS preflight from http://www.bidalbania.al..."
+curl -H "Origin: http://www.bidalbania.al" \
+     -H "Access-Control-Request-Method: GET" \
+     -H "Access-Control-Request-Headers: Content-Type" \
+     -X OPTIONS \
+     -v http://localhost:7700/api/requests/all 2>&1 | grep -E "(Access-Control|HTTP)"
+
+echo ""
+echo "🔍 Testing CORS preflight from http://bidalbania.al:7700..."
+curl -H "Origin: http://bidalbania.al:7700" \
      -H "Access-Control-Request-Method: GET" \
      -H "Access-Control-Request-Headers: Content-Type" \
      -X OPTIONS \
@@ -37,13 +37,13 @@ echo "--------------------------"
 
 # Test actual API calls
 echo "🔍 Testing API endpoint with domain origin..."
-curl -H "Origin: https://bidalbania.al" \
+curl -H "Origin: http://bidalbania.al" \
      -H "Content-Type: application/json" \
      -v http://localhost:7700/api/requests/all 2>&1 | head -20
 
 echo ""
 echo "🔍 Testing API endpoint with www subdomain origin..."
-curl -H "Origin: https://www.bidalbania.al" \
+curl -H "Origin: http://www.bidalbania.al" \
      -H "Content-Type: application/json" \
      -v http://localhost:7700/api/requests/all 2>&1 | head -20
 
@@ -63,13 +63,13 @@ echo ""
 echo "🌐 Testing HTTPS Connectivity..."
 echo "-------------------------------"
 
-# Test HTTPS connectivity
-echo "🔍 Testing HTTPS connection to bidalbania.al..."
-curl -I https://bidalbania.al 2>/dev/null | head -5 || echo "HTTPS connection failed"
+# Test HTTP connectivity
+echo "🔍 Testing HTTP connection to bidalbania.al..."
+curl -I http://bidalbania.al 2>/dev/null | head -5 || echo "HTTP connection failed"
 
 echo ""
-echo "🔍 Testing HTTPS connection to www.bidalbania.al..."
-curl -I https://www.bidalbania.al 2>/dev/null | head -5 || echo "HTTPS connection failed"
+echo "🔍 Testing HTTP connection to www.bidalbania.al..."
+curl -I http://www.bidalbania.al 2>/dev/null | head -5 || echo "HTTP connection failed"
 
 echo ""
 echo "📋 PM2 Status:"
@@ -86,6 +86,6 @@ echo "4. Check PM2 logs: pm2 logs bidalbania-backend"
 echo "5. Test local API: curl http://localhost:7700"
 echo ""
 echo "🌐 Expected Configuration:"
-echo "  - Frontend: https://bidalbania.al"
-echo "  - Backend API: https://bidalbania.al:7700/api"
+echo "  - Frontend: http://bidalbania.al"
+echo "  - Backend API: http://bidalbania.al:7700/api"
 echo "  - CORS: Allowed from bidalbania.al domains" 

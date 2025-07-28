@@ -18,7 +18,7 @@ const getApiUrl = () => {
   
   // If we're accessing from the domain, use the domain for the API
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    return 'https://bidalbania.al:7700/api';
+    return 'http://bidalbania.al:7700/api';
   }
   
   // For localhost or development
@@ -27,7 +27,7 @@ const getApiUrl = () => {
   }
   
   // For production (you can change this to your domain)
-  return 'https://bidalbania.al:7700/api';
+  return 'http://bidalbania.al:7700/api';
 };
 
 export const API_URL = getApiUrl();
