@@ -16,7 +16,7 @@ sudo ufw allow 22/tcp
 
 # Allow BidAlbania ports
 sudo ufw allow 8080/tcp
-sudo ufw allow 5000/tcp
+sudo ufw allow 7700/tcp
 
 # Optional: Allow HTTP/HTTPS
 sudo ufw allow 80/tcp
@@ -34,4 +34,4 @@ echo ""
 echo "✅ Firewall configured!"
 echo "🌐 Your apps should be accessible on:"
 echo "   Frontend: http://your-server-ip:8080"
-echo "   Backend:  http://your-server-ip:5000" 
+echo "   Backend:  http://your-server-ip:7700" 

@@ -18,13 +18,13 @@ fi
 
 echo ""
 
-# Check port 5000 (Backend)
-echo "🔍 Checking port 5000 (Backend):"
-if lsof -i :5000 > /dev/null 2>&1; then
-    echo "✅ Port 5000 is in use by:"
-    lsof -i :5000
+# Check port 7700 (Backend)
+echo "🔍 Checking port 7700 (Backend):"
+if lsof -i :7700 > /dev/null 2>&1; then
+    echo "✅ Port 7700 is in use by:"
+    lsof -i :7700
 else
-    echo "❌ Port 5000 is NOT in use"
+    echo "❌ Port 7700 is NOT in use"
 fi
 
 echo ""

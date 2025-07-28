@@ -35,8 +35,8 @@ sudo ufw allow 443/tcp
 echo "🚀 Allowing BidAlbania Frontend (port 3000)..."
 sudo ufw allow 3000/tcp
 
-echo "⚙️  Allowing BidAlbania Backend (port 5000)..."
-sudo ufw allow 5000/tcp
+echo "⚙️  Allowing BidAlbania Backend (port 7700)..."
+sudo ufw allow 7700/tcp
 
 # Enable UFW
 echo ""
@@ -52,7 +52,7 @@ echo "✅ Firewall configuration completed!"
 echo ""
 echo "🌐 Your applications should now be accessible on:"
 echo "   Frontend: http://your-server-ip:3000"
-echo "   Backend:  http://your-server-ip:5000"
+echo "   Backend:  http://your-server-ip:7700"
 echo ""
 echo "📋 Useful UFW commands:"
 echo "   sudo ufw status                    - Check firewall status"
