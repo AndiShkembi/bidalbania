@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './contexts/AuthContext';
+import { useCSP } from './hooks/useCSP';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -26,6 +27,9 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  // Initialize CSP for the entire application
+  useCSP();
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
