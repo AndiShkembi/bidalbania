@@ -28,9 +28,14 @@ export const useCSP = () => {
       }
     };
 
-    // Upgrade HTTP URLs to HTTPS
+    // Upgrade HTTP URLs to HTTPS (but not for port 7700)
     const upgradeToHTTPS = (url) => {
       if (url && url.startsWith('http://')) {
+        // Don't upgrade if URL contains port 7700 (no SSL certificate)
+        if (url.includes(':7700')) {
+          console.log(`CSP: Skipping HTTPS upgrade for port 7700 (no SSL): ${url}`);
+          return url;
+        }
         return url.replace('http://', 'https://');
       }
       return url;
