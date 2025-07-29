@@ -86,16 +86,6 @@ export const useCSP = () => {
 };
 
 /**
- * Higher-order component for adding CSP to components
- */
-export const withCSP = (Component) => {
-  return (props) => {
-    useCSP();
-    return <Component {...props} />;
-  };
-};
-
-/**
  * Utility function to check if CSP is enabled
  */
 export const isCSPEnabled = () => {
