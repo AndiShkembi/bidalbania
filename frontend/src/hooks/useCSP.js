@@ -38,6 +38,10 @@ export const useCSP = () => {
           console.log(`CSP: Skipping HTTPS upgrade for local/development: ${url}`);
           return url;
         }
+        // Don't upgrade if already HTTPS or domain API
+        if (url.includes('https://') || url.includes('bidalbania.al/api')) {
+          return url;
+        }
         console.log(`CSP: Upgrading HTTP to HTTPS: ${url}`);
         return url.replace('http://', 'https://');
       }
@@ -89,6 +93,10 @@ export const useCSP = () => {
       if (url.includes('localhost') || url.includes('127.0.0.1') || 
           url.includes('192.168.1.237') || url.includes('161.35.211.94') ||
           url.includes(':7700') || url.includes(':8080')) {
+        return url;
+      }
+      // Don't upgrade if already HTTPS or domain API
+      if (url.includes('https://') || url.includes('bidalbania.al/api')) {
         return url;
       }
       return url.replace('http://', 'https://');

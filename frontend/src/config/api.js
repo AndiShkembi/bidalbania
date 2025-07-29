@@ -15,7 +15,7 @@ const getApiUrl = () => {
                             window.location.port === '3000' ||
                             window.location.port === '5173';
   
-  // Development environment (always use localhost)
+  // Development environment (use localhost)
   if (isLocalEnvironment) {
     console.log('🔧 Development mode: Using localhost API');
     return 'http://localhost:7700/api';
@@ -32,15 +32,15 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
-  // For domain access, always use localhost (development setup)
+  // Production environment (domain)
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    console.log('🔧 Domain access: Using localhost API (development setup)');
-    return 'http://localhost:7700/api';
+    console.log('🚀 Production mode: Using domain API');
+    return 'https://bidalbania.al/api';
   }
   
-  // Fallback
-  console.log('🔧 Fallback: Using localhost API');
-  return 'http://localhost:7700/api';
+  // Fallback for production
+  console.log('🚀 Production fallback: Using domain API');
+  return 'https://bidalbania.al/api';
 };
 
 export const API_URL = getApiUrl();
