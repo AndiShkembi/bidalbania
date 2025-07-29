@@ -28,14 +28,17 @@ export const useCSP = () => {
       }
     };
 
-    // Upgrade HTTP URLs to HTTPS (but not for port 7700)
+    // Upgrade HTTP URLs to HTTPS (but not for localhost or development ports)
     const upgradeToHTTPS = (url) => {
       if (url && url.startsWith('http://')) {
-        // Don't upgrade if URL contains port 7700 (no SSL certificate)
-        if (url.includes(':7700')) {
-          console.log(`CSP: Skipping HTTPS upgrade for port 7700 (no SSL): ${url}`);
+        // Don't upgrade localhost, specific IPs, or development ports
+        if (url.includes('localhost') || url.includes('127.0.0.1') || 
+            url.includes('192.168.1.237') || url.includes('161.35.211.94') ||
+            url.includes(':7700') || url.includes(':8080')) {
+          console.log(`CSP: Skipping HTTPS upgrade for local/development: ${url}`);
           return url;
         }
+        console.log(`CSP: Upgrading HTTP to HTTPS: ${url}`);
         return url.replace('http://', 'https://');
       }
       return url;
@@ -82,6 +85,12 @@ export const useCSP = () => {
   // Helper function to upgrade URLs
   const upgradeURL = (url) => {
     if (url && url.startsWith('http://')) {
+      // Don't upgrade localhost, specific IPs, or development ports
+      if (url.includes('localhost') || url.includes('127.0.0.1') || 
+          url.includes('192.168.1.237') || url.includes('161.35.211.94') ||
+          url.includes(':7700') || url.includes(':8080')) {
+        return url;
+      }
       return url.replace('http://', 'https://');
     }
     return url;
