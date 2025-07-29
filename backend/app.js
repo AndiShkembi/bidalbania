@@ -7,8 +7,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 7700;
 
+// CORS Configuration for all environments
+// Note: With Nginx reverse proxy, relative URLs (/api) will be proxied to this backend
 app.use(cors({
   origin: [
+    // Development environments
     'http://localhost:8085', 
     'http://localhost:8080', 
     'http://127.0.0.1:8085', 
@@ -23,6 +26,7 @@ app.use(cors({
     'https://161.35.211.94:8080',
     'https://161.35.211.94:8085',
     'https://161.35.211.94:7700',
+    // Production domain (with and without www)
     'https://bidalbania.al',
     'https://www.bidalbania.al',
     'http://bidalbania.al',

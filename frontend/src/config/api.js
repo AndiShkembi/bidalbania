@@ -32,15 +32,15 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
-  // Production environment (domain with port 7700)
+  // Production environment (using relative URLs with Nginx reverse proxy)
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    console.log('🚀 Production mode: Using domain API with port 7700');
-    return 'https://bidalbania.al:7700/api';
+    console.log('🚀 Production mode: Using relative URLs with Nginx proxy');
+    return '/api'; // Relative URL - Nginx will proxy to backend
   }
   
   // Fallback for production
-  console.log('🚀 Production fallback: Using domain API with port 7700');
-  return 'https://bidalbania.al:7700/api';
+  console.log('🚀 Production fallback: Using relative URLs with Nginx proxy');
+  return '/api'; // Relative URL - Nginx will proxy to backend
 };
 
 export const API_URL = getApiUrl();

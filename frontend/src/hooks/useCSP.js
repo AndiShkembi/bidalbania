@@ -38,8 +38,8 @@ export const useCSP = () => {
           console.log(`CSP: Skipping HTTPS upgrade for local/development: ${url}`);
           return url;
         }
-        // Don't upgrade if already HTTPS or domain API with port 7700
-        if (url.includes('https://') || url.includes('bidalbania.al:7700/api')) {
+        // Don't upgrade if already HTTPS or relative API URLs
+        if (url.includes('https://') || url.startsWith('/api')) {
           return url;
         }
         console.log(`CSP: Upgrading HTTP to HTTPS: ${url}`);
@@ -95,8 +95,8 @@ export const useCSP = () => {
           url.includes(':7700') || url.includes(':8080')) {
         return url;
       }
-      // Don't upgrade if already HTTPS or domain API with port 7700
-      if (url.includes('https://') || url.includes('bidalbania.al:7700/api')) {
+      // Don't upgrade if already HTTPS or relative API URLs
+      if (url.includes('https://') || url.startsWith('/api')) {
         return url;
       }
       return url.replace('http://', 'https://');

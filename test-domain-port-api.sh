@@ -7,11 +7,11 @@ echo ""
 echo "📋 Step 1: Checking API Configuration..."
 echo "---------------------------------------"
 
-# Check if API config uses domain with port 7700
-if grep -q "bidalbania.al:7700/api" "frontend/src/config/api.js"; then
-    echo "✅ API config uses domain with port 7700"
+# Check if API config uses relative URLs for production
+if grep -q "Production mode: Using relative URLs with Nginx proxy" "frontend/src/config/api.js"; then
+    echo "✅ API config uses relative URLs with Nginx proxy"
 else
-    echo "❌ API config does not use domain with port 7700"
+    echo "❌ API config does not use relative URLs with Nginx proxy"
 fi
 
 # Check if API config uses localhost for development
@@ -31,9 +31,9 @@ echo "  • 127.0.0.1:8080 → http://localhost:7700/api"
 echo "  • Any local port → http://localhost:7700/api"
 echo ""
 echo "✅ Production Environment:"
-echo "  • bidalbania.al → https://bidalbania.al:7700/api"
-echo "  • www.bidalbania.al → https://bidalbania.al:7700/api"
-echo "  • Any domain access → https://bidalbania.al:7700/api"
+echo "  • bidalbania.al → /api (relative URL, proxied by Nginx)"
+echo "  • www.bidalbania.al → /api (relative URL, proxied by Nginx)"
+echo "  • Any domain access → /api (relative URL, proxied by Nginx)"
 
 echo ""
 echo "📋 Step 3: Testing Instructions..."
@@ -51,8 +51,8 @@ echo "🔧 Production Testing:"
 echo ""
 echo "1. Make sure backend is running on port 7700 with SSL"
 echo "2. Open browser: https://bidalbania.al"
-echo "3. Check console for: '🚀 Production mode: Using domain API with port 7700'"
-echo "4. Check Network tab for: https://bidalbania.al:7700/api calls"
+echo "3. Check console for: '🚀 Production mode: Using relative URLs with Nginx proxy'"
+echo "4. Check Network tab for: /api calls (relative URLs)"
 
 echo ""
 echo "📋 Step 4: Console Messages..."
@@ -64,9 +64,9 @@ echo "  • 'API URL configured as: http://localhost:7700/api'"
 echo "  • 'CSP: Skipping HTTPS upgrade for local/development'"
 echo ""
 echo "✅ Expected Production Messages:"
-echo "  • '🚀 Production mode: Using domain API with port 7700'"
-echo "  • 'API URL configured as: https://bidalbania.al:7700/api'"
-echo "  • No CSP interference with domain API"
+echo "  • '🚀 Production mode: Using relative URLs with Nginx proxy'"
+echo "  • 'API URL configured as: /api'"
+echo "  • No CSP interference with relative URLs"
 
 echo ""
 echo "📋 Step 5: Network Tab Check..."
@@ -78,9 +78,9 @@ echo "  • Status should be 200 (success)"
 echo "  • No SSL errors"
 echo ""
 echo "✅ Production Network Requests:"
-echo "  • API calls should show: https://bidalbania.al:7700/api"
+echo "  • API calls should show: /api (relative URLs)"
 echo "  • Status should be 200 (success)"
-echo "  • SSL handled by backend on port 7700"
+echo "  • SSL handled by Nginx"
 echo "  • No mixed content errors"
 
 echo ""
