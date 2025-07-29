@@ -32,15 +32,15 @@ const getApiUrl = () => {
     return 'http://161.35.211.94:7700/api';
   }
   
-  // Production environment (domain)
+  // Production environment (domain with port 7700)
   if (hostname === 'bidalbania.al' || hostname === 'www.bidalbania.al') {
-    console.log('🚀 Production mode: Using domain API');
-    return 'https://bidalbania.al/api';
+    console.log('🚀 Production mode: Using domain API with port 7700');
+    return 'https://bidalbania.al:7700/api';
   }
   
   // Fallback for production
-  console.log('🚀 Production fallback: Using domain API');
-  return 'https://bidalbania.al/api';
+  console.log('🚀 Production fallback: Using domain API with port 7700');
+  return 'https://bidalbania.al:7700/api';
 };
 
 export const API_URL = getApiUrl();

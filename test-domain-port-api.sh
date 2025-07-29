@@ -1,21 +1,21 @@
 #!/bin/bash
 
-echo "🌐 Testing Domain API Configuration..."
-echo "====================================="
+echo "🌐 Testing Domain API with Port 7700..."
+echo "======================================"
 
 echo ""
 echo "📋 Step 1: Checking API Configuration..."
 echo "---------------------------------------"
 
-# Check if API config uses domain for production
-if grep -q "Production mode: Using domain API with port 7700" "frontend/src/config/api.js"; then
-    echo "✅ API config uses domain with port 7700 for production"
+# Check if API config uses domain with port 7700
+if grep -q "bidalbania.al:7700/api" "frontend/src/config/api.js"; then
+    echo "✅ API config uses domain with port 7700"
 else
-    echo "❌ API config does not use domain with port 7700 for production"
+    echo "❌ API config does not use domain with port 7700"
 fi
 
 # Check if API config uses localhost for development
-if grep -q "Development mode: Using localhost API" "frontend/src/config/api.js"; then
+if grep -q "localhost:7700/api" "frontend/src/config/api.js"; then
     echo "✅ API config uses localhost for development"
 else
     echo "❌ API config does not use localhost for development"
@@ -49,9 +49,9 @@ echo "5. Check Network tab for: http://localhost:7700/api calls"
 echo ""
 echo "🔧 Production Testing:"
 echo ""
-echo "1. Deploy to server: ./deploy-nginx-ssl-fix.sh"
+echo "1. Make sure backend is running on port 7700 with SSL"
 echo "2. Open browser: https://bidalbania.al"
-echo "3. Check console for: '🚀 Production mode: Using domain API'"
+echo "3. Check console for: '🚀 Production mode: Using domain API with port 7700'"
 echo "4. Check Network tab for: https://bidalbania.al:7700/api calls"
 
 echo ""
@@ -80,23 +80,23 @@ echo ""
 echo "✅ Production Network Requests:"
 echo "  • API calls should show: https://bidalbania.al:7700/api"
 echo "  • Status should be 200 (success)"
-echo "  • SSL handled by backend or proxy"
+echo "  • SSL handled by backend on port 7700"
 echo "  • No mixed content errors"
 
 echo ""
 echo "⚠️  Important Notes:"
 echo "------------------"
 
-echo "• Development uses localhost (no SSL issues)"
-echo "• Production uses domain with HTTPS"
+echo "• Development uses localhost:7700 (no SSL issues)"
+echo "• Production uses bidalbania.al:7700 with HTTPS"
+echo "• Backend must have SSL certificate on port 7700"
 echo "• CSP automatically adapts to environment"
-echo "• Nginx handles SSL termination in production"
 echo ""
 echo "• For production to work:"
-echo "  1. SSL certificate must be installed"
-echo "  2. Nginx must be configured"
-echo "  3. Backend must be running on port 7700"
-echo "  4. Frontend must be running on port 8085"
+echo "  1. SSL certificate must be installed on port 7700"
+echo "  2. Backend must be configured for HTTPS on port 7700"
+echo "  3. Firewall must allow port 7700"
+echo "  4. Domain must point to correct server"
 
 echo ""
 echo "🔧 Quick Test Commands:"
@@ -108,14 +108,14 @@ echo "  cd frontend && npm run dev"
 echo "  # Visit: http://localhost:8080"
 echo ""
 echo "Production:"
-echo "  ./deploy-nginx-ssl-fix.sh"
+echo "  # Make sure backend has SSL on port 7700"
 echo "  # Visit: https://bidalbania.al"
 
 echo ""
-echo "🎉 Domain API Configuration Complete!"
-echo "===================================="
+echo "🎉 Domain API with Port 7700 Configuration Complete!"
+echo "==================================================="
 echo ""
-echo "✅ Development: Uses localhost (no SSL issues)"
-echo "✅ Production: Uses domain with HTTPS"
+echo "✅ Development: Uses localhost:7700 (no SSL issues)"
+echo "✅ Production: Uses bidalbania.al:7700 with HTTPS"
 echo "✅ CSP: Automatically adapts"
-echo "✅ Environment-aware configuration" 
+echo "✅ Port 7700 specified for domain API calls" 
