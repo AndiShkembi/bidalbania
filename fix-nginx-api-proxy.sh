@@ -1,3 +1,23 @@
+#!/bin/bash
+
+echo "🔧 Fixing Nginx API Proxy Configuration"
+echo "======================================="
+
+# Check if we're on the server
+if [ "$(hostname)" != "bidalbania" ]; then
+    echo "❌ This script should be run on the server (bidalbania)"
+    echo "Please run this script on your server where nginx is installed"
+    exit 1
+fi
+
+# Backup current nginx configuration
+echo "📋 Backing up current nginx configuration..."
+sudo cp /etc/nginx/sites-available/bidalbania.al /etc/nginx/sites-available/bidalbania.al.backup.$(date +%Y%m%d_%H%M%S)
+
+# Create the correct nginx configuration
+echo "📝 Creating correct nginx configuration..."
+
+sudo tee /etc/nginx/sites-available/bidalbania.al > /dev/null << 'EOF'
 # Nginx Reverse Proxy Configuration for Bidalbania
 # This configuration handles SSL termination and routes traffic to backend and frontend
 
@@ -111,4 +131,51 @@ server {
     listen 80;
     server_name www.bidalbania.al;
     return 301 https://www.bidalbania.al$request_uri;
-} 
+}
+EOF
+
+# Test nginx configuration
+echo "🧪 Testing nginx configuration..."
+if sudo nginx -t; then
+    echo "✅ Nginx configuration is valid"
+    
+    # Reload nginx
+    echo "🔄 Reloading nginx..."
+    sudo systemctl reload nginx
+    
+    if [ $? -eq 0 ]; then
+        echo "✅ Nginx reloaded successfully"
+        
+        # Test the API endpoint
+        echo "🧪 Testing API endpoint..."
+        sleep 2
+        if curl -s -o /dev/null -w "Status: %{http_code}\n" "https://bidalbania.al/api/requests/all?category=Elektricist&page=1&pageSize=20" | grep -q "200"; then
+            echo "✅ API endpoint is now working!"
+            echo ""
+            echo "🎉 Success! The API endpoint is now accessible without port 7700:"
+            echo "   https://bidalbania.al/api/requests/all?category=Elektricist&page=1&pageSize=20"
+        else
+            echo "❌ API endpoint is still not working"
+            echo "Let's check the nginx error logs..."
+            sudo tail -10 /var/log/nginx/error.log
+        fi
+    else
+        echo "❌ Failed to reload nginx"
+        sudo systemctl status nginx
+    fi
+else
+    echo "❌ Nginx configuration is invalid"
+    echo "Restoring backup..."
+    sudo cp /etc/nginx/sites-available/bidalbania.al.backup.* /etc/nginx/sites-available/bidalbania.al
+    sudo nginx -t
+fi
+
+echo ""
+echo "📋 Summary:"
+echo "The key change was in the proxy_pass directive:"
+echo "  - Before: proxy_pass http://localhost:7700/api/;"
+echo "  - After:  proxy_pass http://localhost:7700;"
+echo ""
+echo "This ensures that when nginx receives /api/requests/all,"
+echo "it forwards the request to http://localhost:7700/api/requests/all"
+echo "instead of http://localhost:7700/api/api/requests/all" 
